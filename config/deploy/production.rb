@@ -6,7 +6,7 @@ set :keep_releases, 5
 set :rvm_type, :system
 set :rvm_ruby_version, '2.2.2'
 
-set :deploy_to, "/home/arnage/buyengine/"
+set :deploy_to, "/home/arnage/tours/"
 #
 set :ssh_options, {
   	user: "arnage"

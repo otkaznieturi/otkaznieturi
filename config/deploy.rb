@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
-set :application, 'buyengine'
-set :repo_url, 'git@github.com:/arnage/buyengine.git'
+set :application, 'tours'
+set :repo_url, 'git@github.com:/arnage/tours.git'
 set :stages,        %w(staging production)
 set :stage_dir,     "app/config/deploy"
 
