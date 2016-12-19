@@ -14,8 +14,4 @@ namespace :deploy do
       execute "touch #{release_path}/tmp/restart.txt"
     end
   end
-
-  desc "No ActiveRecord override"
-  task :migrate do
-  end
 end
