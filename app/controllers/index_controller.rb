@@ -1,5 +1,7 @@
 class IndexController < ApplicationController
-	def logged_user
-		respond_with json: :ok, {status: user_signed_in?}
+	before_filter :authenticate_request!
+
+	def index
+		render json: {logged: true}
 	end
 end
