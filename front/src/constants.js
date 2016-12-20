@@ -11,5 +11,7 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const ROUTING = 'ROUTING'
 
 // URL's
-export const loginUrl = 'http://0.0.0.0:4000/login'
-export const registrationUrl = 'http://0.0.0.0:4000/register'
+// export const loginUrl = 'http://127.0.0.1:4000/sign_in'
+// export const registrationUrl = 'http://127.0.0.1:4000/sign_up'
+export const loginUrl = 'http://85.143.214.26:4000/api/sign_in'
+export const registrationUrl = 'http://85.143.214.26:4000/api/sign_up'

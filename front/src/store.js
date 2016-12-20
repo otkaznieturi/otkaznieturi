@@ -4,13 +4,21 @@ import createLogger from 'redux-logger'
 import { rootReducer } from './reducers/index.js'
 import { redirect } from './middlewares/redirect'
 
+let redux_extension = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 export let configureStore = () => {
-  const store = compose(
-    applyMiddleware(thunkMiddleware),
-    applyMiddleware(createLogger()),
-    applyMiddleware(redirect),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )(createStore)(rootReducer)
+  const store = redux_extension ?
+    compose(
+      applyMiddleware(thunkMiddleware),
+      applyMiddleware(createLogger()),
+      applyMiddleware(redirect),
+      redux_extension
+    )(createStore)(rootReducer)
+  :
+    compose(
+      applyMiddleware(thunkMiddleware),
+      applyMiddleware(createLogger()),
+      applyMiddleware(redirect)
+    )(createStore)(rootReducer)
 
   if (module.hot) {
     module.hot.accept('./reducers/index.js', () => {
