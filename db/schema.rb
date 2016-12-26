@@ -10,7 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161217152404) do
+ActiveRecord::Schema.define(version: 20161226204111) do
+
+  create_table "tours", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.string   "agency"
+    t.string   "country"
+    t.string   "city"
+    t.string   "hotel"
+    t.integer  "rating"
+    t.integer  "room_rating"
+    t.string   "dinner"
+    t.datetime "departure_date"
+    t.integer  "nights"
+    t.integer  "adult_count"
+    t.integer  "child_count"
+    t.string   "child_ages"
+    t.text     "information",    limit: 65535
+    t.string   "transfer"
+    t.integer  "current_cost"
+    t.string   "hotel_link"
+    t.string   "travel_agent"
+    t.string   "contacts"
+    t.string   "status"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string   "email",                  limit: 100, default: "", null: false

@@ -2,12 +2,12 @@ import {
   LOGIN_REQUEST,
   LOGOUT_REQUEST,
   LOGIN_FAIL,
-  LOGIN_CHECK,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   REGISTER_REQUEST,
+  HIDE_MSG,
   ROUTING,
   loginUrl,
   registrationUrl,
@@ -33,15 +33,21 @@ let login_success = (dispatch, payload) => {
   })
 }
 
-let login_fail = (dispatch) => {
+let login_fail = (dispatch, payload) => {
   dispatch({
     type: LOGIN_FAIL,
     payload: {
       isAuthenticated: false,
       loading: false,
-      token: null
+      token: null,
+      errors: payload.errors
     }
   })
+  setTimeout(() => {
+    dispatch({
+      type: HIDE_MSG
+    })
+  }, 5000)
 }
 
 let register_success = (dispatch, payload) => {
@@ -85,14 +91,14 @@ export let register = (payload) => {
     let data = new FormData()
     data.append('email', payload.login)
     data.append('password', payload.pass)
-    data.append('password_confirmation', payload.pass)
+    data.append('password_confirmation', payload.pass_confirm)
     fetch(registrationUrl, { 
       method: 'POST',
       credentials: 'include',
       body: data
     }).then((response) => {
         response.status !== 200 ?
-          login_fail(dispatch)
+          response.json().then((jsonResp) => { login_fail(dispatch, jsonResp) })
         :
           response.json().then((jsonResp) => { login_success(dispatch, jsonResp) })
       })
@@ -120,7 +126,7 @@ export let login = (payload) => {
       body: data
     }).then((response) => {
         response.status === 401 ?
-          login_fail(dispatch)
+          response.json().then((jsonResp) => { login_fail(dispatch, jsonResp) })
         :
           response.json().then((jsonResp) => { login_success(dispatch, jsonResp) })
       })

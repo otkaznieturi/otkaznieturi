@@ -1,9 +1,9 @@
 import '../common.css'
-import { Col, Button, Form, FormGroup, FormControl } from 'react-bootstrap'
+import {Col, Button, Form, FormGroup, FormControl, Alert} from 'react-bootstrap'
 
-import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import * as authActions from '../../actions/auth'
 import Header from '../header.jsx'
 
@@ -14,7 +14,7 @@ export class LoginPage extends Component {
   }
   render() {
     return (
-      <div className='col-bg-8 col-bg-offset-2 col-md-12'>
+      <Col lg={8} lgOffset={2} md={12} sm={12}>
         <Header/>
         {
           <div>
@@ -44,6 +44,15 @@ export class LoginPage extends Component {
                             </Button>
                           </FormGroup>
                         </Form>
+                        { this.props.auth.errors ?
+                          <div className="error_info">
+                            <Alert bsStyle="danger">
+                              <strong>{this.props.auth.errors}</strong>
+                            </Alert>
+                          </div>
+                        :
+                          null
+                        }
                       </Col>
                     </div>
                   </div>
@@ -51,7 +60,7 @@ export class LoginPage extends Component {
             </div>
           </div>
         }        
-      </div>
+      </Col>
     )
   }
 }

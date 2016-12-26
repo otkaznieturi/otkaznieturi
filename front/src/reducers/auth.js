@@ -1,4 +1,11 @@
-import {LOGIN_REQUEST, LOGOUT_REQUEST, LOGIN_FAIL, LOGIN_CHECK, LOGIN_SUCCESS, LOGOUT_SUCCESS} from '../constants'
+import {
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  HIDE_MSG
+} from '../constants'
 
 let token = localStorage.getItem('bearer')
 
@@ -18,11 +25,6 @@ export let authReducer = (state = initialState, action) => {
         token: action.payload.token
       }
 
-    case LOGIN_CHECK:
-      return {
-        token: action.payload.token
-      }
-
     case LOGIN_SUCCESS:
       return {
         isAuthenticated: action.payload.isAuthenticated,
@@ -34,7 +36,8 @@ export let authReducer = (state = initialState, action) => {
       return {
         isAuthenticated: action.payload.isAuthenticated,
         loading: action.payload.loading,
-        token: action.payload.token
+        token: action.payload.token,
+        errors: action.payload.errors
       }
 
     case LOGOUT_REQUEST:
@@ -48,6 +51,14 @@ export let authReducer = (state = initialState, action) => {
         isAuthenticated: action.payload.isAuthenticated,
         loading: action.payload.loading,
         token: action.payload.token
+      }
+
+    case HIDE_MSG:
+      return {
+        isAuthenticated: state.isAuthenticated,
+        loading: state.loading,
+        token: state.token,
+        errors: null
       }
 
     default:

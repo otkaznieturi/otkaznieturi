@@ -14,8 +14,8 @@ export class Header extends Component {
     return (
       <div className="Header">
         {this.props.auth.isAuthenticated ?
-          <Navbar>
-            <Nav bsStyle="pills">
+          <Navbar fluid>
+            <Nav>
               <LinkContainer to="/">
                 <NavItem>
                   Главная
@@ -46,8 +46,8 @@ export class Header extends Component {
             </Nav>
           </Navbar>
         :
-          <Navbar>
-            <Nav bsStyle="pills">
+          <Navbar fluid>
+            <Nav>
               <LinkContainer to="/">
                 <NavItem>
                   Главная

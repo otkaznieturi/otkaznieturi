@@ -4,22 +4,19 @@ class AuthController < ApplicationController
 	    if user && user.valid_password?(params[:password])
 	      	render json: payload(user)
 	    else
-	      	render json: {errors: ['Invalid Username/Password']}, status: :unauthorized
+	      	render json: {errors: ['Неверный email/пароль']}, status: :unauthorized
 	    end
   	end
 
   	def register_user
 	    user = User.new(user_params)
-
 	    user.save
 	    if user.persisted?
 	      if user.active_for_authentication?
 	        render json: payload(user)
 	      end
 	    else
-	      clean_up_passwords user
-	      set_minimum_password_length
-	      render json: {errors: user.errors}, status: :unauthorized
+	      render json: {errors: user.errors.messages.values}, status: :unauthorized
 	    end
   	end
 

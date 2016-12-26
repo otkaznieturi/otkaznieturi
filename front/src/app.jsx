@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import LK from './components/lk.jsx'
 import Header from './components/header.jsx'
+import {Col} from 'react-bootstrap'
 
 export let requireAuth = () => {
   class App extends Component {
@@ -23,13 +23,12 @@ export let requireAuth = () => {
       }
     }
     render() {
-      console.log(this.props)
       return (
         <div className="App">
-          <div className='col-bg-8 col-bg-offset-2 col-md-12'>
+          <Col md={12} sm={12} lg={8} lgOffset={2}>
             <Header/>
             {this.props.children}
-          </div>
+          </Col>
         </div>
       )
     }
