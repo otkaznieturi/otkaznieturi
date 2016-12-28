@@ -1,5 +1,6 @@
 import {
-  GET_MY_TOURS,
+  GET_MY_TOURS_REQUEST,
+  GET_MY_TOURS_SUCCESS,
   SETUP_ACCOUNT_REQUEST,
   SETUP_ACCOUNT_SUCCESS,
   SETUP_ACCOUNT_ERR,
@@ -14,9 +15,15 @@ export let accountReducer = (state = initialState, action) => {
 
   switch (action.type) {
 
-    case GET_MY_TOURS:
+    case GET_MY_TOURS_REQUEST:
       return {
-        loading: action.payload.loading
+        loading: true,
+        tours: state.tours
+      }
+    case GET_MY_TOURS_SUCCESS:
+      return {
+        loading: false,
+        tours: action.payload.tours
       }
 
     case SETUP_ACCOUNT_REQUEST:

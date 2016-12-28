@@ -1,10 +1,11 @@
-// const host = "http://127.0.0.1:4000"
-const host = "http://85.143.214.26:4000"
+const host = "http://127.0.0.1:4000"
+// const host = "http://85.143.214.26:4000"
 
 // URL's
 export const loginUrl = host + '/api/sign_in'
 export const registrationUrl = host + '/api/sign_up'
 export const change_pass_url = host + '/api/change_pass'
+export const my_tours_url = host + '/api/tours/my_tours'
 
 // REDUX STATES
 // common
@@ -22,6 +23,7 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const SETUP_ACCOUNT_REQUEST = 'SETUP_ACCOUNT_REQUEST'
 export const SETUP_ACCOUNT_SUCCESS = 'SETUP_ACCOUNT_SUCCESS'
 export const SETUP_ACCOUNT_ERR = 'SETUP_ACCOUNT_ERR'
-export const GET_MY_TOURS = 'GET_MY_TOURS'
+export const GET_MY_TOURS_REQUEST = 'GET_MY_TOURS_REQUEST'
+export const GET_MY_TOURS_SUCCESS = 'GET_MY_TOURS_SUCCESS'
 
 export const ROUTING = 'ROUTING'

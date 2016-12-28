@@ -2,7 +2,7 @@ default: &default
   adapter: mysql2
   username: root
   database: tours
-  password: '11'
+  password: 
   pool: 5
   timeout: 5000
   encoding: utf8mb4

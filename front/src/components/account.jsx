@@ -9,7 +9,12 @@ export default class AccountPage extends Component {
     return (
 		<div className="account">
 			<Col lg={9} md={9} sm={9}>
-				{this.props.children}
+      {
+        this.props.children ?
+				  React.cloneElement(this.props.children, { mode: 'my' })
+        :
+          null
+      }
 			</Col>
 			<Col lg={3} md={3} sm={3}>
 				<Nav bsStyle="pills" stacked>
