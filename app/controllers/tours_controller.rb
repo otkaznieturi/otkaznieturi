@@ -1,13 +1,21 @@
 class ToursController < ApplicationController
   before_action :authenticate_request!
 
+  def tours_counters
+    render json: { tours: Tour.count, today_tours: Tour.where("created_at >= ?", Time.zone.now.beginning_of_day).count }, status: :ok
+  end
+
   def search
     found = Tour.where('country LIKE ?', "%#{params[:q]}%")
     render json: { tours: found }, status: :ok
   end
 
   def index
-    render json: { tours: Tours.all }, status: :ok
+    render json: { tours: Tour.all }, status: :ok
+  end
+
+  def today_tours
+    render json: { tours: Tour.where("created_at >= ?", Time.zone.now.beginning_of_day) }, status: :ok
   end
 
   def create

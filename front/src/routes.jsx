@@ -11,18 +11,19 @@ import ToursPage from './components/tours.jsx'
 import ChangeAccPage from './components/auth/change.jsx'
 import {requireAuth} from './app.jsx'
 
-export const routes = (  
+export const routes = (
   <div>
     <Route path='tours' component={requireAuth()} >
       <IndexRedirect to='all' />
       <Route path='all' component={ToursPage}/>
       <Route path='today' component={ToursPage}/>
       <Route path='add' component={ToursPage}/>
+      <Route path='search' component={ToursPage}/>
     </Route>
     <Route path='account' component={requireAuth()} >
       <IndexRedirect to='my' />
       <Route path='my' component={AccountPage}>
-        <Route path='tours' component={ToursPage} />
+        <Route path='my_tours' component={ToursPage} />
         <Route path='change' component={ChangeAccPage} />
       </Route>
     </Route>
@@ -30,6 +31,6 @@ export const routes = (
     <Route path='login' component={LoginPage} />
     <Route path='logout' component={Logout} />
     <Route path='register' component={RegisterPage} />
-    <Route path='*' component={NotFound} />    
+    <Route path='*' component={NotFound} />
   </div>
 )

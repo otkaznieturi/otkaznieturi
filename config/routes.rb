@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       collection do
         get 'search', to: 'tours#search'
         get 'my_tours', to: 'tours#my_tours'
+        get 'today_tours', to: 'tours#today_tours'
+        get 'counters', to: 'tours#tours_counters'
       end
     end
   end

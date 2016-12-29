@@ -5,20 +5,15 @@ import * as accountActions from '../actions/account'
 import {Link} from 'react-router'
 
 import './common.css'
-import {Table} from 'react-bootstrap'
+import {Table, Col, Nav, NavItem} from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
-class Tours extends Component {
-  componentWillMount() {
-    if(this.props.mode === 'my')
-      this.props.actions.get_my_tours()
-    else
-      this.props.actions.get_all_tours()
-  }
-  render() {
+class TourTable extends Component {
+  render(){
     return (
-    	<div className='tours'>
-        { this.props.account.tours ?
-          <Table striped bordered condensed hover>
+      <div className='tours'>
+        { this.props.tours ?
+          <Table striped bordered condensed hover responsive>
             <thead>
               <tr>
                 <th>ID</th>
@@ -31,7 +26,7 @@ class Tours extends Component {
             </thead>
             <tbody>
               {
-                this.props.account.tours.map((tour, index) => {
+                this.props.tours.map((tour, index) => {
                   return <tr key={index}>
                     <td>{tour.id}</td>
                     <td>{tour.agency}</td>
@@ -54,6 +49,51 @@ class Tours extends Component {
         }
       </div>
     )
+  }
+}
+
+class Tours extends Component {
+  componentWillMount() {
+    switch(this.props.route.path){
+      case 'my_tours':
+        this.props.actions.get_tours('my')
+      break
+      case 'today':
+        this.props.actions.get_tours('today')
+      break
+      case 'search':
+      break
+      default:
+        this.props.actions.get_tours('all')
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log('ATMTA')
+  }
+  render() {
+    return this.props.route.path === 'my_tours' ?
+      (<TourTable tours={this.props.account.tours} />)
+    :
+      (
+      	<div className='tours'>
+          <Col lg={9} md={9} sm={9}>
+            <TourTable tours={this.props.account.tours} />
+          </Col>
+          <Col lg={3} md={3} sm={3}>
+            <Nav bsStyle="pills" stacked>
+              <LinkContainer to="/tours/all">
+                <NavItem eventKey={1}>Все</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/tours/today">
+                <NavItem eventKey={2}>Созданные сегодня</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/tours/search">
+                <NavItem eventKey={3}>Поиск</NavItem>
+              </LinkContainer>
+            </Nav>
+          </Col>
+        </div>
+      )
   }
 }
 

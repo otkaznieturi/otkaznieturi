@@ -18,13 +18,13 @@ export default class AccountPage extends Component {
 			</Col>
 			<Col lg={3} md={3} sm={3}>
 				<Nav bsStyle="pills" stacked>
-					<LinkContainer to="/account/my/tours">
-				    	<NavItem eventKey={1} href="/home">Мои туры</NavItem>
-				    </LinkContainer>
-				    <LinkContainer to="/account/my/change">
-				    	<NavItem eventKey={2} >Изменить пароль</NavItem>
-				    </LinkContainer>
-		  		</Nav>
+					<LinkContainer to="/account/my/my_tours">
+			    	<NavItem eventKey={1}>Мои туры</NavItem>
+			    </LinkContainer>
+			    <LinkContainer to="/account/my/change">
+			    	<NavItem eventKey={2} >Изменить пароль</NavItem>
+			    </LinkContainer>
+	  		</Nav>
 			</Col>
 		</div>
     )

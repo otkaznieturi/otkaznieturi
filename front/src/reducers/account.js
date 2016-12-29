@@ -18,7 +18,7 @@ export let accountReducer = (state = initialState, action) => {
     case GET_MY_TOURS_REQUEST:
       return {
         loading: true,
-        tours: state.tours
+        tours: []
       }
     case GET_MY_TOURS_SUCCESS:
       return {

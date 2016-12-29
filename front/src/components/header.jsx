@@ -26,11 +26,6 @@ export class Header extends Component {
                   <Glyphicon glyph="transfer"/> Туры
                 </NavItem>
               </LinkContainer>
-              <LinkContainer to="/search">
-                <NavItem>
-                  <Glyphicon glyph="search"/> Поиск
-                </NavItem>
-              </LinkContainer>
             </Nav>
             <Nav pullRight={true}>
               <LinkContainer to="/account">

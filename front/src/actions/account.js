@@ -7,7 +7,9 @@ import {
   HIDE_MSG,
   ROUTING,
   change_pass_url,
-  my_tours_url
+  my_tours_url,
+  all_tours_url,
+  today_tours_url
 } from '../constants'
 
 export let setup_account = (payload) => {
@@ -61,13 +63,25 @@ export let setup_account = (payload) => {
   }
 }
 
-export let get_my_tours = (payload) => {
+export let get_tours = (mode) => {
   return (dispatch) => {
     dispatch({
       type: GET_MY_TOURS_REQUEST
     })
 
-    fetch(my_tours_url, {
+    let url = null;
+    switch (mode){
+      case 'all':
+        url = all_tours_url;
+      break
+      case 'my':
+        url = my_tours_url;
+      break
+      case 'today':
+        url = today_tours_url;
+      break
+    }
+    fetch(url, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('bearer')
       },
