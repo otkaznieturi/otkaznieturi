@@ -4,6 +4,8 @@ import {
   SETUP_ACCOUNT_REQUEST,
   SETUP_ACCOUNT_SUCCESS,
   SETUP_ACCOUNT_ERR,
+  CREATE_TOUR_REQUEST,
+  CREATE_TOUR_SUCCESS,
   HIDE_MSG
 } from '../constants'
 
@@ -42,6 +44,16 @@ export let accountReducer = (state = initialState, action) => {
       return {
         loading: false,
         errors: action.payload.errors
+      }
+    case CREATE_TOUR_REQUEST:
+      return {
+        loading: true,
+        status: null
+      }
+    case CREATE_TOUR_SUCCESS:
+      return {
+        loading: false,
+        status: null
       }
 
     case HIDE_MSG:

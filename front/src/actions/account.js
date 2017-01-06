@@ -4,12 +4,15 @@ import {
   SETUP_ACCOUNT_REQUEST,
   SETUP_ACCOUNT_SUCCESS,
   SETUP_ACCOUNT_ERR,
+  CREATE_TOUR_REQUEST,
+  CREATE_TOUR_SUCCESS,
   HIDE_MSG,
   ROUTING,
   change_pass_url,
   my_tours_url,
   all_tours_url,
-  today_tours_url
+  today_tours_url,
+  create_tour_url
 } from '../constants'
 
 export let setup_account = (payload) => {
@@ -101,6 +104,47 @@ export let get_tours = (mode) => {
         dispatch({
           type: SETUP_ACCOUNT_ERR
         })
+    });
+  }
+}
+
+export let create_tour = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: CREATE_TOUR_REQUEST
+    })
+
+    let data = new FormData()
+    data.append('agency', payload.agency)
+    data.append('country', payload.country)
+    data.append('city', payload.city)
+    data.append('hotel', payload.hotel)
+    data.append('rating', payload.rating)
+    fetch(create_tour_url, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'POST',
+      credentials: 'include',
+      body: data
+    }).then((response) => {
+      response.json().then((jsonResp) => {
+        dispatch({
+          type: CREATE_TOUR_SUCCESS
+        })
+        dispatch({
+          type: ROUTING,
+          payload: {
+            method: 'replace',
+            nextUrl: '/tours/all'
+          }
+        })
+      })
+    })
+    .catch((error) => {
+      // dispatch({
+      //   type: SETUP_ACCOUNT_ERR
+      // })
     });
   }
 }

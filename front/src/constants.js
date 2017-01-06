@@ -11,6 +11,7 @@ export const my_tours_url = host + prefix + 'tours/my_tours'
 export const all_tours_url = host + prefix + 'tours'
 export const today_tours_url = host + prefix + 'tours/today_tours'
 export const get_counters_url = host + prefix + 'tours/counters'
+export const create_tour_url = host + prefix + 'tours'
 
 // REDUX STATES
 // common
@@ -30,6 +31,8 @@ export const SETUP_ACCOUNT_SUCCESS = 'SETUP_ACCOUNT_SUCCESS'
 export const SETUP_ACCOUNT_ERR = 'SETUP_ACCOUNT_ERR'
 export const GET_MY_TOURS_REQUEST = 'GET_MY_TOURS_REQUEST'
 export const GET_MY_TOURS_SUCCESS = 'GET_MY_TOURS_SUCCESS'
+export const CREATE_TOUR_REQUEST = 'CREATE_TOUR_REQUEST'
+export const CREATE_TOUR_SUCCESS = 'CREATE_TOUR_SUCCESS'
 // main
 export const GET_TOURS_COUNTER_REQUEST = 'GET_TOURS_COUNTER_REQUEST'
 export const GET_TOURS_COUNTER_SUCCESS = 'GET_TOURS_COUNTER_SUCCESS'

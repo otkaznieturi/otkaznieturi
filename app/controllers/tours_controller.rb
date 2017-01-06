@@ -1,5 +1,5 @@
 class ToursController < ApplicationController
-  before_action :authenticate_request!
+  before_action :authenticate_request!, except: [:tours_counters]
 
   def tours_counters
     render json: { tours: Tour.count, today_tours: Tour.where("created_at >= ?", Time.zone.now.beginning_of_day).count }, status: :ok
@@ -19,7 +19,7 @@ class ToursController < ApplicationController
   end
 
   def create
-    tour = Tour.create(tour_params)
+    tour = Tour.create!(tour_params.merge(user: @current_user))
     if tour
       render json: { tour: tour }, status: 201
     else

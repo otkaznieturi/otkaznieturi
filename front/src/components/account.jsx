@@ -11,7 +11,7 @@ export default class AccountPage extends Component {
 			<Col lg={9} md={9} sm={9}>
       {
         this.props.children ?
-				  React.cloneElement(this.props.children, { mode: 'my' })
+		  React.cloneElement(this.props.children, { mode: 'my' })
         :
           null
       }
