@@ -6,6 +6,12 @@ import {
   SETUP_ACCOUNT_ERR,
   CREATE_TOUR_REQUEST,
   CREATE_TOUR_SUCCESS,
+  GET_TOUR_INFO_REQUEST,
+  GET_TOUR_INFO_SUCCESS,
+  DELETE_TOUR_REQUEST,
+  DELETE_TOUR_SUCCESS,
+  UPDATE_TOUR_REQUEST,
+  UPDATE_TOUR_SUCCESS,
   HIDE_MSG
 } from '../constants'
 
@@ -54,6 +60,32 @@ export let accountReducer = (state = initialState, action) => {
       return {
         loading: false,
         status: null
+      }
+    case GET_TOUR_INFO_REQUEST:
+      return {
+        loading: true,
+        tour: null
+      }
+    case GET_TOUR_INFO_SUCCESS:
+      return {
+        loading: false,
+        tour: action.payload.tour
+      }
+    case DELETE_TOUR_REQUEST:
+      return {
+        loading: true
+      }
+    case DELETE_TOUR_SUCCESS:
+      return {
+        loading: false
+      }
+    case UPDATE_TOUR_REQUEST:
+      return {
+        loading: true
+      }
+    case UPDATE_TOUR_SUCCESS:
+      return {
+        loading: false
       }
 
     case HIDE_MSG:

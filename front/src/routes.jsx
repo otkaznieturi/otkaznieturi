@@ -7,8 +7,7 @@ import MainPage from './components/main.jsx'
 import RegisterPage from './components/auth/register.jsx'
 import NotFound from './components/not_found.jsx'
 import AccountPage from './components/account.jsx'
-import {ToursPage} from './components/tours.jsx'
-import {AddToursPage} from './components/tours.jsx'
+import {ToursPage, ShowToursPage, AddToursPage, EditToursPage} from './components/tours.jsx'
 import ChangeAccPage from './components/auth/change.jsx'
 import {requireAuth} from './app.jsx'
 
@@ -19,6 +18,8 @@ export const routes = (
       <Route path='all' component={ToursPage}/>
       <Route path='today' component={ToursPage}/>
       <Route path='add' component={AddToursPage}/>
+      <Route path=':id' component={ShowToursPage}/>
+      <Route path=':id/edit' component={EditToursPage}/>
     </Route>
     <Route path='account' component={requireAuth()} >
       <IndexRedirect to='my' />

@@ -32,9 +32,9 @@ class ToursController < ApplicationController
   end
 
   def update
-    tour = Tour.find_by(id: params[:id], client_id: @current_user)
+    tour = Tour.find_by(id: params[:id], user: @current_user)
     if tour
-      tour.update_attributes(tour_params)
+      result = tour.update_attributes!(tour_params)
       if result
         render json: { tour: :deleted }, status: 200
       else
@@ -46,7 +46,7 @@ class ToursController < ApplicationController
   end
 
   def destroy
-    tour = Tour.find_by(id: params[:id], client_id: @current_user)
+    tour = Tour.find_by(id: params[:id], user: @current_user)
     if tour
       result = tour.destroy
       if result
@@ -62,7 +62,7 @@ class ToursController < ApplicationController
   def show
     tour = Tour.find(params[:id])
     if tour
-      render json: { tour: tour }
+      render json: { tour: tour }, current_user: @current_user
     else
       render json: { errors: tour.errors.messages.values }, status: :ok
     end

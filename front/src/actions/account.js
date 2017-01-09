@@ -6,14 +6,23 @@ import {
   SETUP_ACCOUNT_ERR,
   CREATE_TOUR_REQUEST,
   CREATE_TOUR_SUCCESS,
+  GET_TOUR_INFO_REQUEST,
+  GET_TOUR_INFO_SUCCESS,
+  DELETE_TOUR_REQUEST,
+  DELETE_TOUR_SUCCESS,
+  UPDATE_TOUR_REQUEST,
+  UPDATE_TOUR_SUCCESS,
   HIDE_MSG,
   ROUTING,
   change_pass_url,
   my_tours_url,
   all_tours_url,
   today_tours_url,
-  create_tour_url
+  create_tour_url,
+  get_tour_url
 } from '../constants'
+
+import {forEach} from 'lodash'
 
 export let setup_account = (payload) => {
   return (dispatch) => {
@@ -115,11 +124,7 @@ export let create_tour = (payload) => {
     })
 
     let data = new FormData()
-    data.append('agency', payload.agency)
-    data.append('country', payload.country)
-    data.append('city', payload.city)
-    data.append('hotel', payload.hotel)
-    data.append('rating', payload.rating)
+    forEach(payload, (value, key) => {data.append(key, value)})
     fetch(create_tour_url, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('bearer')
@@ -135,13 +140,124 @@ export let create_tour = (payload) => {
         dispatch({
           type: ROUTING,
           payload: {
-            method: 'replace',
-            nextUrl: '/tours/all'
+            method: 'goBack'
           }
         })
       })
     })
     .catch((error) => {
+      // dispatch({
+      //   type: SETUP_ACCOUNT_ERR
+      // })
+    });
+  }
+}
+
+export let get_tour = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_TOUR_INFO_REQUEST
+    })
+    fetch(get_tour_url + '/' + payload.id, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'GET',
+      credentials: 'include'
+    }).then((response) => {
+      if(response.status === 404)
+        dispatch({
+          type: ROUTING,
+          payload: {
+            method: 'replace',
+            nextUrl: '/not_found'
+          }
+        })
+      else
+        response.json().then((jsonResp) => {
+          dispatch({
+            type: GET_TOUR_INFO_SUCCESS,
+            payload: {
+              tour: jsonResp.tour
+            }
+          })
+        })
+    })
+    .catch((error) => {
+      dispatch({
+        type: ROUTING,
+        payload: {
+          method: 'replace',
+          nextUrl: '/not_found'
+        }
+      })
+    });
+  }
+}
+
+export let delete_tour = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: DELETE_TOUR_REQUEST
+    })
+    fetch(get_tour_url + '/' + payload.id, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'DELETE',
+      credentials: 'include'
+    }).then((response) => {
+      response.json().then((jsonResp) => {
+        dispatch({
+          type: DELETE_TOUR_SUCCESS
+        })
+        dispatch({
+          type: ROUTING,
+          payload: {
+            method: 'goBack'
+          }
+        })
+      })
+    })
+    .catch((error) => {
+      console.error(error)
+      // dispatch({
+      //   type: SETUP_ACCOUNT_ERR
+      // })
+    });
+  }
+}
+
+export let edit_tour = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_TOUR_REQUEST
+    })
+
+    let data = new FormData()
+    forEach(payload, (value, key) => {data.append(key, value)})
+    fetch(get_tour_url + '/' + payload.id, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'PUT',
+      credentials: 'include',
+      body: data
+    }).then((response) => {
+      response.json().then((jsonResp) => {
+        dispatch({
+          type: UPDATE_TOUR_SUCCESS
+        })
+        dispatch({
+          type: ROUTING,
+          payload: {
+            method: 'goBack'
+          }
+        })
+      })
+    })
+    .catch((error) => {
+      console.log(error)
       // dispatch({
       //   type: SETUP_ACCOUNT_ERR
       // })
