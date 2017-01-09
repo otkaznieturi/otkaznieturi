@@ -1,5 +1,5 @@
 // const host = "http://127.0.0.1:4000"
-const host = "отказныетуры.рф"
+const host = "http://85.143.214.26:3000"
 
 const prefix = '/api/'
 
