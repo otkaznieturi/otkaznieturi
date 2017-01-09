@@ -1,5 +1,5 @@
 // const host = "http://127.0.0.1:4000"
-const host = "http://85.143.214.26:4000"
+const host = "xn--80akfkrctkfk9fe.xn--p1ai"
 
 const prefix = '/api/'
 
