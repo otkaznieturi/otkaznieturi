@@ -6,8 +6,10 @@ import {Link} from 'react-router'
 import {forEach} from 'lodash'
 
 import './common.css'
+import './tours.css'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import {LinkContainer} from 'react-router-bootstrap'
+import Rater from 'react-rater'
 import DateTime from 'react-datetime'
 import {
   ButtonToolbar,
@@ -21,7 +23,8 @@ import {
   Glyphicon,
   FormGroup,
   Button,
-  ControlLabel
+  ControlLabel,
+  Panel
 } from 'react-bootstrap'
 
 class ShowToursPage extends Component {
@@ -38,6 +41,19 @@ class ShowToursPage extends Component {
     this.props.actions.delete_tour({id: this.props.params.id})
   }
   render() {
+    let converted_status = ''
+    if(this.props.account.tour)
+      switch(this.props.account.tour.status){
+        case 'active':
+          converted_status = 'Активен'
+        break
+        case 'bought':
+          converted_status = 'Продан'
+        break
+        case 'closed':
+          converted_status = 'Закрыт'
+        break
+      }
     return(
       <div className="tour_view_page">
         {this.props.account.loading || !this.props.account.tour ?
@@ -52,7 +68,7 @@ class ShowToursPage extends Component {
               <dt className='country'>Страна</dt><dd>{this.props.account.tour.country}</dd>
               <dt className='city'>Город</dt><dd>{this.props.account.tour.city}</dd>
               <dt className='hotel'>Отель</dt><dd>{this.props.account.tour.hotel}</dd>
-              <dt className='rating'>Количество звезд отеля</dt><dd>{this.props.account.tour.rating}*</dd>
+              <dt className='rating'>Количество звезд отеля</dt><dd><Rater interactive={false} rating={this.props.account.tour.rating} /></dd>
               <dt className='room_rating'>Категория номера</dt><dd>{this.props.account.tour.room_rating}</dd>
               <dt className='dinner'>Питание</dt><dd>{this.props.account.tour.dinner}</dd>
               <dt className='departure_date'>Дата вылета</dt><dd>{DateTime.moment(this.props.account.tour.departure_date).format("DD.MM.YYYY")}</dd>
@@ -64,11 +80,11 @@ class ShowToursPage extends Component {
               <dt className='transfer'>Трансфер</dt><dd>{this.props.account.tour.transfer}</dd>
               <dt className='hotel_link'>Сcылка на отель</dt><dd>{this.props.account.tour.hotel_link}</dd>
               <dt className='travel_agent'>Туроператор</dt><dd>{this.props.account.tour.travel_agent}</dd>
-              <dt className='current_cost'>Стоимость тура у оператора</dt><dd>{this.props.account.tour.current_cost}</dd>
-              <dt className='original_cost'>Начальная стоимость</dt><dd>{this.props.account.tour.original_cost}</dd>
-              <dt className='real_cost'>Стоимость купленного тура</dt><dd>{this.props.account.tour.real_cost}</dd>
+              <dt className='original_cost'>Стоимость на сайте ТО в день продажи</dt><dd>{this.props.account.tour.original_cost} руб.</dd>
+              <dt className='current_cost'>Стоимость на сайте ТО на данный момент</dt><dd>{this.props.account.tour.current_cost} руб.</dd>
+              <dt className='real_cost'>Стоимость тура у нас</dt><dd>{this.props.account.tour.real_cost} руб. (за один тур)</dd>
               <dt className='contacts'>Контакты</dt><dd>{this.props.account.tour.contacts}</dd>
-              <dt className='status'>Статус</dt><dd>{this.props.account.tour.status}</dd>
+              <dt className='status'>Статус</dt><dd>{converted_status}</dd>
               <dt className='created_at'>Дата создания тура</dt><dd>{DateTime.moment(this.props.account.tour.created_at).format("DD.MM.YYYY")}</dd>
             </dl>
             { this.props.account.tour.isMy ?
@@ -98,10 +114,7 @@ class ShowToursPage extends Component {
 }
 
 class AddToursPage extends Component {
-  handleSubmit(e) {
-    e.preventDefault()
-    let data = {}
-    forEach(e.target.elements, (v) => {data[v.id] = v.value})
+  handleSubmit(data) {
     this.props.actions.create_tour(data)
   }
   goBack() {
@@ -125,10 +138,8 @@ class EditToursPage extends Component {
   componentWillMount() {
     this.props.actions.get_tour({id: this.props.params.id})
   }
-  handleSubmit(e) {
-    e.preventDefault()
-    let data = {id: this.props.params.id}
-    forEach(e.target.elements, (v) => {data[v.id] = v.value})
+  handleSubmit(data) {
+    data.id = this.props.params.id
     this.props.actions.edit_tour(data)
   }
   goBack() {
@@ -158,10 +169,17 @@ class EditToursPage extends Component {
 }
 
 class TourForm extends Component {
+  handle(e) {
+    e.preventDefault()
+    let data = {}
+    forEach(e.target.elements, (v) => {data[v.id] = v.value})
+    data.rating = this.rater.state.rating
+    this.props.handlerSubmit(data)
+  }
   render() {
     let values = this.props.data || {}
     return (
-      <Form onSubmit={this.props.handlerSubmit}>
+      <Form onSubmit={this.handle.bind(this)}>
         <ControlLabel>Турагентство:</ControlLabel>
         <FormControl
           id="agency"
@@ -190,20 +208,12 @@ class TourForm extends Component {
           placeholder="Введите название отеля..."
           defaultValue={values.hotel}
         />
-        <FormGroup>
-          <ControlLabel>Количество звезд отеля</ControlLabel>
-          <FormControl id="rating" componentClass="select" placeholder="Количество звезд отеля" defaultValue={values.rating}>
-            <option value={1}>1 звезда</option>
-            <option value={2}>2 звезды</option>
-            <option value={3}>3 звезды</option>
-            <option value={4}>4 звезды</option>
-            <option value={5}>5 звезд</option>
-          </FormControl>
-        </FormGroup>
+        <ControlLabel>Категория отеля</ControlLabel>
+        <Rater rating={values.rating || 1} onRate={(rate) => {}} ref={(rater) => { this.rater = rater; }} />
         <ControlLabel>Категория номера:</ControlLabel>
         <FormControl
           id="room_rating"
-          type="number"
+          type="text"
           placeholder="Введите категорию номера..."
           defaultValue={values.room_rating}
         />
@@ -277,22 +287,22 @@ class TourForm extends Component {
         <FormControl
           id="original_cost"
           type="number"
-          placeholder="Стоимость, по которой отдают этот тур ТО"
+          placeholder="Стоимость на сайте ТО в день продажи"
           defaultValue={values.original_cost}
-        />
-        <ControlLabel>Стоимость купленного тура:</ControlLabel>
-        <FormControl
-          id="real_cost"
-          type="number"
-          placeholder="Стоимость, по которой тур был куплен у ТО"
-          defaultValue={values.real_cost}
         />
         <ControlLabel>Стоимость тура у оператора:</ControlLabel>
         <FormControl
           id="current_cost"
           type="number"
-          placeholder="Текущая стоимость такого тура у ТО"
+          placeholder="Стоимость на сайте ТО на данный момент"
           defaultValue={values.current_cost}
+        />
+        <ControlLabel>Стоимость отказного тура:</ControlLabel>
+        <FormControl
+          id="real_cost"
+          type="number"
+          placeholder="Стоимость отказного тура"
+          defaultValue={values.real_cost}
         />
         <FormGroup controlId="contacts">
           <ControlLabel>Контакты</ControlLabel>
@@ -319,6 +329,10 @@ class TourForm extends Component {
   }
 }
 
+let ratingFormatter = (cell, row) => {
+  return (<Rater interactive={false} rating={cell} />)
+}
+
 class TourTable extends Component {
   handleRowClick(item_data){
     this.props.handlerRowClick(item_data.id)
@@ -341,7 +355,7 @@ class TourTable extends Component {
             <TableHeaderColumn dataField='country' dataSort={ true }>Страна</TableHeaderColumn>
             <TableHeaderColumn dataField='city' dataSort={ true }>Город</TableHeaderColumn>
             <TableHeaderColumn dataField='hotel' dataSort={ true }>Отель</TableHeaderColumn>
-            <TableHeaderColumn dataField='rating' dataSort={ true }>Рейтинг</TableHeaderColumn>
+            <TableHeaderColumn dataField='rating' dataFormat={ ratingFormatter } dataSort={ true }>Рейтинг</TableHeaderColumn>
           </BootstrapTable>
         :
           <div>
@@ -410,7 +424,7 @@ class Tours extends Component {
                 <NavItem eventKey={2}>Созданные сегодня</NavItem>
               </LinkContainer>
               <NavDropdown eventKey={22} title="Действия" id="nav-dropdown">
-                <LinkContainer to="/tours/search" disabled>
+                <LinkContainer to="/tours/search">
                   <MenuItem eventKey={3}>Глобальный поиск</MenuItem>
                 </LinkContainer>
                 <LinkContainer to="/tours/add">
@@ -421,6 +435,12 @@ class Tours extends Component {
           </Col>
         </div>
       )
+  }
+}
+
+class SearchToursPage extends Component {
+  render() {
+    return (<div></div>);
   }
 }
 
@@ -440,10 +460,12 @@ let connected_page = connect(mapStateToProps, mapDispatchToProps)(Tours)
 let connected_add_page = connect(mapStateToProps, mapDispatchToProps)(AddToursPage)
 let connected_edit_page = connect(mapStateToProps, mapDispatchToProps)(EditToursPage)
 let connected_show_page = connect(mapStateToProps, mapDispatchToProps)(ShowToursPage)
+let connected_search_page = connect(mapStateToProps, mapDispatchToProps)(SearchToursPage)
 
 export {
   connected_page as ToursPage,
   connected_add_page as AddToursPage,
   connected_edit_page as EditToursPage,
-  connected_show_page as ShowToursPage
+  connected_show_page as ShowToursPage,
+  connected_search_page as SearchToursPage
 }

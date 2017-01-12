@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228100616) do
+ActiveRecord::Schema.define(version: 20170112105129) do
 
   create_table "tours", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string   "agency"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20161228100616) do
     t.string   "city"
     t.string   "hotel"
     t.integer  "rating"
-    t.integer  "room_rating"
+    t.string   "room_rating"
     t.string   "dinner"
     t.datetime "departure_date"
     t.integer  "nights"

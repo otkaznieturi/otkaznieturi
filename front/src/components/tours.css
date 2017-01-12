@@ -1,0 +1,46 @@
+.tour_info {
+    width: 500px;
+}
+.tour_info .dl-horizontal dt {
+  white-space: normal;
+  width: 200px;
+}
+
+.tour_info .dl-horizontal dd {
+  margin-left: 210px;
+}
+
+.react-rater {
+  line-height: normal;
+}
+.react-rater a {
+  cursor: pointer;
+  color: #ccc;
+  position: relative;
+  font-size: 17px;
+}
+.react-rater a.will-be-active {
+  color: #7dbce0;
+}
+.react-rater a.is-active {
+  color: #31a5e8;
+}
+.react-rater a.is-active-half:before {
+  color: #31a5e8;
+  content: '\2605';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+}
+.react-rater a.is-disabled {
+  cursor: default;
+}
+
+form .react-rater a {
+  font-size: 30px;
+}
+
+table td {
+  cursor: pointer;
+}
