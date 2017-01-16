@@ -13,5 +13,6 @@ en:
             password:
               blank: "Пароль не заполнен"
               confirmation: "Пароль и подтверждение пароля не совпадают"
+              too_short: "Пароль слишком короткий"
             password_confirmation:
               blank: "Подтверждение пароля не заполнено"

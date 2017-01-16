@@ -168,12 +168,60 @@ class EditToursPage extends Component {
   }
 }
 
+class RaterStar extends Component {
+  defaultProps = {
+    willBeActive: false,
+    isActive: false,
+    isActiveHalf: false,
+    isDisabled: false
+  }
+  render() {
+    let nameMap = {
+      isDisabled: 'is-disabled',
+      isActive: 'is-active',
+      isActiveHalf: 'is-active-half',
+      willBeActive: 'will-be-active'
+    }
+    let className = Object.keys(nameMap)
+          .filter((prop) => this.props[prop])
+          .map((prop) => nameMap[prop])
+          .join(' ')
+    let { onClick, onMouseEnter, isDisabled } = this.props
+    let icon = null
+    switch(this.props.view_type) {
+      case 'star':
+        icon = '★'
+      break
+      case 'parent':
+        icon = <Glyphicon glyph='user' />
+      break
+      case 'child':
+        icon = <i className="fa fa-child fa-lg" aria-hidden="true"></i>
+      break
+    }
+    if (isDisabled) {
+      return (<a className={className}>{icon}</a>)
+    }
+    return (<a className={className} onClick={onClick} onMouseEnter={onMouseEnter}>{icon}</a>)
+  }
+}
+
+class RaterGetter extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {rating: props.rating}
+  }
+  render() {return (<span>{this.state.rating}</span>)}
+}
+
 class TourForm extends Component {
   handle(e) {
     e.preventDefault()
     let data = {}
     forEach(e.target.elements, (v) => {data[v.id] = v.value})
-    data.rating = this.rater.state.rating
+    data.rating = this.hotel_rate.state.rating
+    data.adult_count = this.adult_count.state.rating
+    data.child_count = this.child_count.state.rating
     this.props.handlerSubmit(data)
   }
   render() {
@@ -208,8 +256,10 @@ class TourForm extends Component {
           placeholder="Введите название отеля..."
           defaultValue={values.hotel}
         />
-        <ControlLabel>Категория отеля</ControlLabel>
-        <Rater rating={values.rating || 1} onRate={(rate) => {}} ref={(rater) => { this.rater = rater; }} />
+        <ControlLabel>Категория отеля: <RaterGetter rating={values.rating || 1} ref={(ref)=>{this.rating_shower = ref}} /></ControlLabel>
+        <Rater rating={values.rating || 1} onRate={(e) => {this.rating_shower.setState({rating: e.rating})}} ref={(rater) => { this.hotel_rate = rater; }}>
+          <RaterStar view_type="star" />
+        </Rater>
         <ControlLabel>Категория номера:</ControlLabel>
         <FormControl
           id="room_rating"
@@ -239,18 +289,14 @@ class TourForm extends Component {
           type="number"
           defaultValue={values.nights}
         />
-        <ControlLabel>Количество взрослых:</ControlLabel>
-        <FormControl
-          id="adult_count"
-          type="number"
-          defaultValue={values.adult_count}
-        />
-        <ControlLabel>Количество детей:</ControlLabel>
-        <FormControl
-          id="child_count"
-          type="number"
-          defaultValue={values.child_count}
-        />
+        <ControlLabel>Количество взрослых: <RaterGetter rating={values.adult_count || 1} ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
+        <Rater rating={values.adult_count || 1} total={8} onRate={(e) => {this.adult_count_shower.setState({rating: e.rating})}} ref={(rater) => { this.adult_count = rater; }}>
+          <RaterStar view_type="parent" />
+        </Rater>
+        <ControlLabel>Количество детей: <RaterGetter rating={values.child_count || 0} ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
+        <Rater rating={values.child_count || 0} onRate={(e) => {this.child_count_shower.setState({rating: e.rating})}} ref={(rater) => { this.child_count = rater; }}>
+          <RaterStar view_type="child" />
+        </Rater>
         <ControlLabel>Возраст каждого ребенка:</ControlLabel>
         <FormControl
           id="child_ages"
