@@ -6,15 +6,24 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as authActions from '../../actions/auth'
 import Header from '../header.jsx'
+import Recaptcha from 'react-recaptcha'
 
 export class RegisterPage extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {captcha_confirm: false}
+  }
   handleSubmit(e) {
     e.preventDefault()
-    this.props.actions.register({
-      login: e.target.elements[0].value,
-      pass: e.target.elements[1].value,
-      pass_confirm: e.target.elements[2].value
-    })
+    if (this.state.captcha_confirm)
+      this.props.actions.register({
+        login: e.target.elements[0].value,
+        pass: e.target.elements[1].value,
+        pass_confirm: e.target.elements[2].value
+      })
+  }
+  recaptchaVerifyCallback(response) {
+    console.log(response)
   }
   render() {
     return (
@@ -44,11 +53,19 @@ export class RegisterPage extends Component {
                         Подтверждение пароля
                         <FormControl type="password" placeholder="Password" />
                       </FormGroup>
-                      <FormGroup>
-                        <Button bsStyle='primary' type="submit">
-                          Регистрация
-                        </Button>
-                      </FormGroup>
+                      { this.state.captcha_confirm ?
+                        <FormGroup>
+                          <Button bsStyle='primary' type="submit">
+                            Регистрация
+                          </Button>
+                        </FormGroup>
+                      :
+                        <Recaptcha
+                          sitekey="6LdTOhIUAAAAAJnBd0fPA-gpCRSboBiC0IL39CcH"
+                          theme="dark"
+                          verifyCallback={this.recaptchaVerifyCallback}
+                        />
+                      }
                     </Form>
                     { this.props.auth.errors ?
                       <div className="error_info">
