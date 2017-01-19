@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap'
-import { bindActionCreators } from 'redux'
+import { Nav, Navbar, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 import { LinkContainer } from 'react-router-bootstrap'

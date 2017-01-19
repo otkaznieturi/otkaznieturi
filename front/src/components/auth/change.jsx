@@ -5,7 +5,6 @@ import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as accountActions from '../../actions/account'
-import Header from '../header.jsx'
 
 class ChangeAccPage extends Component {
   handleSubmit(e) {

@@ -23,7 +23,12 @@ export class RegisterPage extends Component {
       })
   }
   recaptchaVerifyCallback(response) {
-    console.log(response)
+    // TODO make server check later
+    if(response)
+      this.setState({captcha_confirm: true})
+  }
+  recaptchaLoadCallback() {
+    // nothing todo here
   }
   render() {
     return (
@@ -60,11 +65,14 @@ export class RegisterPage extends Component {
                           </Button>
                         </FormGroup>
                       :
-                        <Recaptcha
-                          sitekey="6LdTOhIUAAAAAJnBd0fPA-gpCRSboBiC0IL39CcH"
-                          theme="dark"
-                          verifyCallback={this.recaptchaVerifyCallback}
-                        />
+                        <FormGroup>
+                          <Recaptcha
+                            sitekey="6LdTOhIUAAAAAJnBd0fPA-gpCRSboBiC0IL39CcH"
+                            render="explicit"
+                            onloadCallback={this.recaptchaLoadCallback}
+                            verifyCallback={this.recaptchaVerifyCallback.bind(this)}
+                          />
+                        </FormGroup>
                       }
                     </Form>
                     { this.props.auth.errors ?

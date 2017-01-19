@@ -1,17 +1,14 @@
 import {
   LOGIN_REQUEST,
-  LOGOUT_REQUEST,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
-  REGISTER_SUCCESS,
   REGISTER_REQUEST,
   HIDE_MSG,
   ROUTING,
   loginUrl,
-  registrationUrl,
-  sessionUrl
+  registrationUrl
 } from '../constants'
 
 let login_success = (dispatch, payload) => {
@@ -50,24 +47,6 @@ let login_fail = (dispatch, payload) => {
   }, 5000)
 }
 
-let register_success = (dispatch, payload) => {
-  dispatch({
-    type: REGISTER_SUCCESS,
-    payload: {
-      isAuthenticated: true,
-      loading: false,
-      token: null
-    }
-  })
-  dispatch({
-    type: ROUTING,
-    payload: {
-      method: 'replace',
-      nextUrl: '/'
-    }
-  })
-}
-
 let register_fail = (dispatch) => {
   dispatch({
     type: REGISTER_FAIL,
@@ -92,7 +71,7 @@ export let register = (payload) => {
     data.append('email', payload.login)
     data.append('password', payload.pass)
     data.append('password_confirmation', payload.pass_confirm)
-    fetch(registrationUrl, { 
+    fetch(registrationUrl, {
       method: 'POST',
       credentials: 'include',
       body: data
@@ -120,7 +99,7 @@ export let login = (payload) => {
     let data = new FormData()
     data.append('email', payload.login)
     data.append('password', payload.pass)
-    fetch(loginUrl, { 
+    fetch(loginUrl, {
       method: 'POST',
       credentials: 'include',
       body: data

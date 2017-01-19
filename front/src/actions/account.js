@@ -92,6 +92,8 @@ export let get_tours = (mode) => {
       case 'today':
         url = today_tours_url;
       break
+      default:
+      break
     }
     fetch(url, {
       headers: {
