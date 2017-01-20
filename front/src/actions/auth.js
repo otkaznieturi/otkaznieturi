@@ -17,10 +17,12 @@ let login_success = (dispatch, payload) => {
     payload: {
       isAuthenticated: true,
       loading: false,
-      token: payload.auth_token
+      token: payload.auth_token,
+      admin: payload.user.admin
     }
   })
   localStorage.setItem('bearer', payload.auth_token)
+  localStorage.setItem('ca', payload.user.admin)
   dispatch({
     type: ROUTING,
     payload: {
@@ -118,6 +120,7 @@ export let login = (payload) => {
 export let logout = (payload) => {
   return (dispatch) => {
     localStorage.removeItem('bearer')
+    localStorage.removeItem('ca')
     dispatch({
       type: LOGOUT_SUCCESS,
       payload: {

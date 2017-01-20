@@ -1,5 +1,5 @@
-// const host = "http://127.0.0.1:4000"
-const host = "http://85.143.214.26:3000"
+const host = "http://127.0.0.1:4000"
+// const host = "http://85.143.214.26:3000"
 
 const prefix = '/api/'
 
@@ -13,6 +13,7 @@ export const today_tours_url = host + prefix + 'tours/today_tours'
 export const get_counters_url = host + prefix + 'tours/counters'
 export const create_tour_url = host + prefix + 'tours'
 export const get_tour_url = host + prefix + 'tours'
+export const get_users_url = host + prefix + 'users'
 
 // REDUX STATES
 // common
@@ -43,5 +44,9 @@ export const UPDATE_TOUR_SUCCESS = 'UPDATE_TOUR_SUCCESS'
 // main
 export const GET_TOURS_COUNTER_REQUEST = 'GET_TOURS_COUNTER_REQUEST'
 export const GET_TOURS_COUNTER_SUCCESS = 'GET_TOURS_COUNTER_SUCCESS'
+//admin
+export const GET_USERS_REQUEST = 'GET_USERS_REQUEST'
+export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
+export const GET_USERS_ERR = 'GET_USERS_ERR'
 
 export const ROUTING = 'ROUTING'

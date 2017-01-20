@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post '/api/sign_in', to: 'auth#authenticate_user'
   post '/api/sign_up', to: 'auth#register_user'
   post '/api/change_pass', to: 'user#change_pass'
+  get '/api/users', to: 'user#users'
 
   scope '/api' do
     resources :tours, except: [:new, :edit] do

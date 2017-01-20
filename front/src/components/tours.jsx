@@ -88,6 +88,27 @@ class TextCollapser extends Component {
   }
 }
 
+class TourNav extends Component {
+  render() {
+    return (
+      <Nav bsStyle="pills">
+        <LinkContainer to="/tours/all">
+          <NavItem eventKey={1}>Все</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/tours/today">
+          <NavItem eventKey={2}>Созданные сегодня</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/tours/search">
+          <MenuItem eventKey={3}>Глобальный поиск</MenuItem>
+        </LinkContainer>
+        <LinkContainer to="/tours/add">
+          <MenuItem eventKey={4}>Добавить тур</MenuItem>
+        </LinkContainer>
+      </Nav>
+    )
+  }
+}
+
 class ShowToursPage extends Component {
   componentWillMount() {
     this.props.actions.get_tour({id: this.props.params.id})
@@ -126,7 +147,7 @@ class ShowToursPage extends Component {
           </div>
         :
           <div className="tour_info">
-            <h4>Подробная информация о туре #{this.props.account.tour.id}</h4>
+            <h4>Подробная информация о туре</h4>
             <dl className="dl-horizontal">
               <dt className='agency'>Турагентство</dt><dd>{this.props.account.tour.agency}</dd>
               <dt className='country'>Страна</dt><dd>{this.props.account.tour.country}</dd>
@@ -191,6 +212,7 @@ class AddToursPage extends Component {
   render() {
     return(
       <div className="tour_form">
+        <TourNav />
         <h3>Создание тура</h3>
         <TourForm
           handlerSubmit={this.handleSubmit.bind(this)}
@@ -317,7 +339,6 @@ class TourForm extends Component {
     data.adult_count = this.adult_count.state.rating
     data.child_count = this.child_count.state.rating
     data.child_ages = this.child_age_setter.state.values.slice(0, data.child_count).join(',')
-    console.log(this.child_age_setter.state.values)
     this.props.handlerSubmit(data)
   }
   render() {
@@ -789,8 +810,8 @@ class Tours extends Component {
     this.props.router.push('/tours/' + id)
   }
   render() {
-    return this.props.route.path === 'my_tours' ?
-      (
+    if(this.props.route.path === 'my_tours')
+      return (
         this.props.account.loading ?
           <div className='loading_wrapper'>
             <div className='loading'></div>
@@ -798,44 +819,66 @@ class Tours extends Component {
         :
           <TourTable tours={this.props.account.tours} handlerRowClick={this.handlerRowClick.bind(this)} />
       )
-    :
-      (
-      	<div className='tours'>
-          <Col lg={10} md={10} sm={10}>
-            {this.props.account.loading ?
-              <div className='loading_wrapper'>
-                <div className='loading'></div>
-              </div>
-            :
-              <TourTable tours={this.props.account.tours} handlerRowClick={this.handlerRowClick.bind(this)} />
-            }
-          </Col>
-          <Col lg={2} md={2} sm={2}>
-            <Nav bsStyle="pills" stacked>
-              <LinkContainer to="/tours/all">
-                <NavItem eventKey={1}>Все</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/tours/today">
-                <NavItem eventKey={2}>Созданные сегодня</NavItem>
-              </LinkContainer>
-              <NavDropdown eventKey={22} title="Действия" id="nav-dropdown">
-                <LinkContainer to="/tours/search">
-                  <MenuItem eventKey={3}>Глобальный поиск</MenuItem>
-                </LinkContainer>
-                <LinkContainer to="/tours/add">
-                  <MenuItem eventKey={4}>Добавить тур</MenuItem>
-                </LinkContainer>
-              </NavDropdown>
-            </Nav>
-          </Col>
+    else
+      return (
+        <div className='tours'>
+          <TourNav />
+          {this.props.account.loading ?
+            <div className='loading_wrapper'>
+              <div className='loading'></div>
+            </div>
+          :
+            <TourTable tours={this.props.account.tours} handlerRowClick={this.handlerRowClick.bind(this)} />
+          }
         </div>
       )
   }
 }
 
-class SearchToursPage extends Component {
+class SearchForm extends Component {
+  handleChange(k, v) {
+    let state = this.state || {}
+    state[k] = v
+    this.setState(state)
+  }
+  handleSearch() {
+    this.props.handleSearch(this.state)
+  }
   render() {
-    return (<div></div>);
+    return (
+      <div className="search_form">
+
+      </div>
+    )
+  }
+}
+
+class SearchToursPage extends Component {
+  fetchSearchTours(data) {
+    console.log('search', data)
+    // this.props.actions.search_tours(data)
+  }
+  handlerRowClick(id) {
+    this.props.router.push('/tours/' + id)
+  }
+  render() {
+    return (
+      <div className="search_page">
+        <TourNav />
+        <SearchForm handleSearch={this.fetchSearchTours.bind(this)}/>
+        {
+          this.props.account.found ?
+            <TourTable tours={this.props.account.tours} handlerRowClick={this.handlerRowClick.bind(this)} />
+          :
+            this.props.account.init_found ?
+              <div className="text-center">
+                Увы, по выбранным параметрам ничего не найдено
+              </div>
+            :
+              null
+        }
+      </div>
+    )
   }
 }
 

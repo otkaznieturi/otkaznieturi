@@ -8,11 +8,13 @@ import {
 } from '../constants'
 
 let token = localStorage.getItem('bearer')
+let admin = localStorage.getItem('ca')
 
 const initialState = {
   isAuthenticated: !!token,
   loading: false,
-  token: token ? token : null
+  token: token ? token : null,
+  admin: !!admin
 }
 
 export let authReducer = (state = initialState, action) => {
@@ -29,7 +31,8 @@ export let authReducer = (state = initialState, action) => {
       return {
         isAuthenticated: action.payload.isAuthenticated,
         loading: action.payload.loading,
-        token: action.payload.token
+        token: action.payload.token,
+        admin: action.payload.admin
       }
 
     case LOGIN_FAIL:
