@@ -21,7 +21,7 @@ class ToursController < ApplicationController
   def create
     tour = Tour.create!(tour_params.merge(user: @current_user))
     if tour
-      deliver_notifications(tour)
+      ToursController.deliver_notifications(tour)
       render json: { tour: tour }, status: 201
     else
       render json: { errors: tour.errors.messages.values }, status: :ok

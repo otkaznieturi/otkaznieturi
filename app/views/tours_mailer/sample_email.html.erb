@@ -6,8 +6,8 @@
   <body>
     <h2>Добавлен новый тур</h2>
     <p>
-      Новый тур от туроператора <%- @tour_info.travel_agent %> в <%- @tour_info.country %>,<%- @tour_info.city %> в отель <%- @tour_info.hotel %> на <%- @tour_info.nights %> ночей.
-      <a href="отказныетуры.рф/tours/<%- @tour_info.id %>">Подробнее...</a>
+      Новый тур от туроператора <%= @tour_info.travel_agent %> в <%= @tour_info.country %>,<%= @tour_info.city %> в отель <%= @tour_info.hotel %> на <%= @tour_info.nights %> ночей.
+      <a href="отказныетуры.рф/tours/<%= @tour_info.id %>">Подробнее...</a>
     </p>
   </body>
 </html>
