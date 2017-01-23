@@ -71,7 +71,7 @@ class ToursController < ApplicationController
 
   def self.deliver_notifications(tour)
     users = User.where(tours_subscribe: true).pluck(:email)
-    ToursMailer.sample_email(users, tour)
+    ToursMailer.sample_email(users, tour).deliver!
   end
 
   private
