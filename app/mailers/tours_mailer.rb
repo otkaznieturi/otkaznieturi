@@ -1,7 +1,8 @@
 class ToursMailer < ApplicationMailer
-  default from: "no-reply@отказныетуры.рф"
-  def sample_email(user)
-    # @user = user
-    mail(to: user, subject: 'Sample Email')
+  def sample_email(users, tour)
+    @tour_info = tour
+    users.each do |user|
+      mail(to: user, subject: 'Sample Email')
+    end
   end
 end
