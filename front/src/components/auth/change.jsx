@@ -27,7 +27,7 @@ class ChangeAccPage extends Component {
           :
             <div>
               <div className="row text-center">
-                <Col lg={8} lgOffset={2} md={8} mdOffset={2} sm={12}>
+                <Col lg={6} lgOffset={3} md={6} mdOffset={3} sm={12}>
                   <Form onSubmit={this.handleSubmit.bind(this)}>
                     <FormGroup controlId="formHorizontalOldPassword">
                       Текущий пароль

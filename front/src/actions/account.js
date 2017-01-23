@@ -12,6 +12,8 @@ import {
   DELETE_TOUR_SUCCESS,
   UPDATE_TOUR_REQUEST,
   UPDATE_TOUR_SUCCESS,
+  CHANGE_SUBSCRIBE_REQUEST,
+  CHANGE_SUBSCRIBE_SUCCESS,
   HIDE_MSG,
   ROUTING,
   change_pass_url,
@@ -19,7 +21,8 @@ import {
   all_tours_url,
   today_tours_url,
   create_tour_url,
-  get_tour_url
+  get_tour_url,
+  change_subscribe_url
 } from '../constants'
 
 import {forEach} from 'lodash'
@@ -254,6 +257,40 @@ export let edit_tour = (payload) => {
           type: ROUTING,
           payload: {
             method: 'goBack'
+          }
+        })
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+      // dispatch({
+      //   type: SETUP_ACCOUNT_ERR
+      // })
+    });
+  }
+}
+
+export let change_subscribe = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: CHANGE_SUBSCRIBE_REQUEST
+    })
+
+    let data = new FormData()
+    forEach(payload, (value, key) => {data.append(key, value)})
+    fetch(change_subscribe_url, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'PUT',
+      credentials: 'include',
+      body: data
+    }).then((response) => {
+      response.json().then((jsonResp) => {
+        dispatch({
+          type: CHANGE_SUBSCRIBE_SUCCESS,
+          payload: {
+            subscribe: jsonResp.subscribe
           }
         })
       })

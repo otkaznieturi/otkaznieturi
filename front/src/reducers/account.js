@@ -12,11 +12,16 @@ import {
   DELETE_TOUR_SUCCESS,
   UPDATE_TOUR_REQUEST,
   UPDATE_TOUR_SUCCESS,
+  CHANGE_SUBSCRIBE_REQUEST,
+  CHANGE_SUBSCRIBE_SUCCESS,
   HIDE_MSG
 } from '../constants'
 
+let sub = localStorage.getItem('sub')
+
 const initialState = {
-  loading: false
+  loading: false,
+  subscribe: sub
 }
 
 export let accountReducer = (state = initialState, action) => {
@@ -86,6 +91,16 @@ export let accountReducer = (state = initialState, action) => {
     case UPDATE_TOUR_SUCCESS:
       return {
         loading: false
+      }
+    case CHANGE_SUBSCRIBE_REQUEST:
+      return {
+        loading: true
+      }
+    case CHANGE_SUBSCRIBE_SUCCESS:
+      localStorage.setItem('sub', action.payload.subscribe)
+      return {
+        loading: false,
+        subscribe: action.payload.subscribe
       }
 
     case HIDE_MSG:

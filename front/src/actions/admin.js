@@ -2,7 +2,11 @@ import {
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
   GET_USERS_ERR,
-  get_users_url
+  DELETE_USERS_REQUEST,
+  DELETE_USERS_SUCCESS,
+  DELETE_USERS_ERR,
+  get_users_url,
+  delete_users_url
 } from '../constants'
 
 export let get_users = (mode) => {
@@ -30,6 +34,39 @@ export let get_users = (mode) => {
       .catch((error) => {
         dispatch({
           type: GET_USERS_ERR
+        })
+    });
+  }
+}
+
+export let delete_users = (ids) => {
+  return (dispatch) => {
+    dispatch({
+      type: DELETE_USERS_REQUEST
+    })
+
+    let data = new FormData()
+    data.append('ids', ids)
+    fetch(delete_users_url, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'DELETE',
+      credentials: 'include',
+      body: data
+    }).then((response) => {
+        response.json().then((jsonResp) => {
+          dispatch({
+            type: DELETE_USERS_SUCCESS,
+            payload: {
+              users: jsonResp.users
+            }
+          })
+        })
+      })
+      .catch((error) => {
+        dispatch({
+          type: DELETE_USERS_ERR
         })
     });
   }

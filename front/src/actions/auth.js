@@ -8,6 +8,7 @@ import {
   HIDE_MSG,
   ROUTING,
   loginUrl,
+  CHANGE_SUBSCRIBE_SUCCESS,
   registrationUrl
 } from '../constants'
 
@@ -23,6 +24,13 @@ let login_success = (dispatch, payload) => {
   })
   localStorage.setItem('bearer', payload.auth_token)
   localStorage.setItem('ca', payload.user.admin)
+  localStorage.setItem('sub', payload.user.subscribe)
+  dispatch({
+    type: CHANGE_SUBSCRIBE_SUCCESS,
+    payload: {
+      subscribe: payload.user.subscribe
+    }
+  })
   dispatch({
     type: ROUTING,
     payload: {

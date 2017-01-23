@@ -6,7 +6,7 @@ import Logout from './components/auth/logout.jsx'
 import MainPage from './components/main.jsx'
 import RegisterPage from './components/auth/register.jsx'
 import NotFound from './components/not_found.jsx'
-import AccountPage from './components/account.jsx'
+import {AccountPage, SubscribesPage} from './components/account.jsx'
 import {ToursPage, ShowToursPage, AddToursPage, EditToursPage, SearchToursPage} from './components/tours.jsx'
 import {UsersPage} from './components/users.jsx'
 import ChangeAccPage from './components/auth/change.jsx'
@@ -32,6 +32,7 @@ export const routes = (
       <Route path='my' component={AccountPage}>
         <Route path='my_tours' component={ToursPage} />
         <Route path='change' component={ChangeAccPage} />
+        <Route path='subscribes' component={SubscribesPage} />
       </Route>
     </Route>
     <Route path='/' component={MainPage} />

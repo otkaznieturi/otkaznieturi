@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   before_action :authenticate_request!
-  before_action :must_be_admin, only: [:users]
+  before_action :must_be_admin, only: [:users, :delete_users]
 
   def change_pass
     user = @current_user
@@ -17,6 +17,17 @@ class UserController < ApplicationController
   def users
     users = User.where.not(id: @current_user.id)
     render json: { users: users }
+  end
+
+  def delete_users
+    User.where(id: [params[:ids]]).destroy_all
+    users = User.where.not(id: @current_user.id)
+    render json: { status: :ok, users: users }
+  end
+
+  def change_subscribe
+    @current_user.update_attributes!(tours_subscribe: !@current_user.tours_subscribe)
+    render json: { subscribe: @current_user.tours_subscribe }
   end
 
   private

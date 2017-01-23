@@ -13,8 +13,14 @@ class UsersPage extends Component {
     this.fetchUsers()
   }
   handleDeletedRow(del_data) {
+    let fordel_ids = []
     for(var i in del_data)
-      console.log(this.props.admin.users[i])
+      fordel_ids.push(this.props.admin.users[i].id)
+    this.props.actions.delete_users(fordel_ids)
+  }
+  confirmDelete(next) {
+    // make confirmation here
+    next();
   }
   render() {
     return (
@@ -29,7 +35,11 @@ class UsersPage extends Component {
             deleteRow
             selectRow={{mode: 'checkbox', clickToSelect: true}}
             searchPlaceholder='Поиск по таблице...'
-            options={{afterDeleteRow: this.handleDeletedRow.bind(this)}}
+            options={{
+              afterDeleteRow: this.handleDeletedRow.bind(this),
+              deleteText: 'Удалить',
+              handleConfirmDeleteRow: this.confirmDelete
+            }}
             hover>
             <TableHeaderColumn dataField='id' isKey={true} dataSort={ true }>ID</TableHeaderColumn>
             <TableHeaderColumn dataField='email' dataSort={ true }>Email</TableHeaderColumn>

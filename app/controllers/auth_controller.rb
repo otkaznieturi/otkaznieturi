@@ -33,7 +33,8 @@ class AuthController < ApplicationController
       user: {
         id: user.id,
         email: user.email,
-        admin: user.admin
+        admin: user.admin,
+        subscribe: user.tours_subscribe
       }
     }
   end

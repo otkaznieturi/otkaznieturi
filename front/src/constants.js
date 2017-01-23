@@ -1,5 +1,5 @@
-const host = "http://127.0.0.1:4000"
-// const host = "http://85.143.214.26:3000"
+// const host = "http://127.0.0.1:4000"
+const host = "http://85.143.214.26:3000"
 
 const prefix = '/api/'
 
@@ -14,6 +14,8 @@ export const get_counters_url = host + prefix + 'tours/counters'
 export const create_tour_url = host + prefix + 'tours'
 export const get_tour_url = host + prefix + 'tours'
 export const get_users_url = host + prefix + 'users'
+export const change_subscribe_url = host + prefix + 'change_subscribe'
+export const delete_users_url = host + prefix + 'delete_users'
 
 // REDUX STATES
 // common
@@ -27,6 +29,8 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const REGISTER_FAIL = 'REGISTER_FAIL'
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+export const CHANGE_SUBSCRIBE_REQUEST = 'CHANGE_SUBSCRIBE_REQUEST'
+export const CHANGE_SUBSCRIBE_SUCCESS = 'CHANGE_SUBSCRIBE_SUCCESS'
 // account
 export const SETUP_ACCOUNT_REQUEST = 'SETUP_ACCOUNT_REQUEST'
 export const SETUP_ACCOUNT_SUCCESS = 'SETUP_ACCOUNT_SUCCESS'
@@ -48,5 +52,8 @@ export const GET_TOURS_COUNTER_SUCCESS = 'GET_TOURS_COUNTER_SUCCESS'
 export const GET_USERS_REQUEST = 'GET_USERS_REQUEST'
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
 export const GET_USERS_ERR = 'GET_USERS_ERR'
+export const DELETE_USERS_REQUEST = 'DELETE_USERS_REQUEST'
+export const DELETE_USERS_SUCCESS = 'DELETE_USERS_SUCCESS'
+export const DELETE_USERS_ERR = 'DELETE_USERS_ERR'
 
 export const ROUTING = 'ROUTING'
