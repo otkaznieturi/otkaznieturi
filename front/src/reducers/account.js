@@ -14,6 +14,8 @@ import {
   UPDATE_TOUR_SUCCESS,
   CHANGE_SUBSCRIBE_REQUEST,
   CHANGE_SUBSCRIBE_SUCCESS,
+  SEARCH_TOURS_REQUEST,
+  SEARCH_TOURS_SUCCESS,
   HIDE_MSG
 } from '../constants'
 
@@ -101,6 +103,17 @@ export let accountReducer = (state = initialState, action) => {
       return {
         loading: false,
         subscribe: action.payload.subscribe
+      }
+    case SEARCH_TOURS_REQUEST:
+      return {
+        loading: true,
+        init_found: false
+      }
+    case SEARCH_TOURS_SUCCESS:
+      return {
+        loading: false,
+        tours: action.payload.tours,
+        init_found: true
       }
 
     case HIDE_MSG:

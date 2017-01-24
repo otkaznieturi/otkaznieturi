@@ -14,15 +14,16 @@ import {
   UPDATE_TOUR_SUCCESS,
   CHANGE_SUBSCRIBE_REQUEST,
   CHANGE_SUBSCRIBE_SUCCESS,
+  SEARCH_TOURS_REQUEST,
+  SEARCH_TOURS_SUCCESS,
   HIDE_MSG,
   ROUTING,
   change_pass_url,
   my_tours_url,
-  all_tours_url,
+  tours_url,
   today_tours_url,
-  create_tour_url,
-  get_tour_url,
-  change_subscribe_url
+  change_subscribe_url,
+  search_tours_url
 } from '../constants'
 
 import {forEach} from 'lodash'
@@ -87,7 +88,7 @@ export let get_tours = (mode) => {
     let url = null;
     switch (mode){
       case 'all':
-        url = all_tours_url;
+        url = tours_url;
       break
       case 'my':
         url = my_tours_url;
@@ -130,7 +131,7 @@ export let create_tour = (payload) => {
 
     let data = new FormData()
     forEach(payload, (value, key) => {data.append(key, value)})
-    fetch(create_tour_url, {
+    fetch(tours_url, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('bearer')
       },
@@ -163,7 +164,7 @@ export let get_tour = (payload) => {
     dispatch({
       type: GET_TOUR_INFO_REQUEST
     })
-    fetch(get_tour_url + '/' + payload.id, {
+    fetch(tours_url + '/' + payload.id, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('bearer')
       },
@@ -205,7 +206,7 @@ export let delete_tour = (payload) => {
     dispatch({
       type: DELETE_TOUR_REQUEST
     })
-    fetch(get_tour_url + '/' + payload.id, {
+    fetch(tours_url + '/' + payload.id, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('bearer')
       },
@@ -241,7 +242,7 @@ export let edit_tour = (payload) => {
 
     let data = new FormData()
     forEach(payload, (value, key) => {data.append(key, value)})
-    fetch(get_tour_url + '/' + payload.id, {
+    fetch(tours_url + '/' + payload.id, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('bearer')
       },
@@ -300,6 +301,36 @@ export let change_subscribe = (payload) => {
       // dispatch({
       //   type: SETUP_ACCOUNT_ERR
       // })
+    });
+  }
+}
+
+export let search_tours = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: SEARCH_TOURS_REQUEST
+    })
+    let url_with_params = search_tours_url + '?'
+    forEach(payload, (value, key) => {url_with_params += key + "=" + value + '&'})
+    url_with_params = url_with_params.slice(0, -1)
+    fetch(url_with_params, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'GET',
+      credentials: 'include'
+    }).then((response) => {
+      response.json().then((jsonResp) => {
+        dispatch({
+          type: SEARCH_TOURS_SUCCESS,
+          payload: {
+            tours: jsonResp.tours
+          }
+        })
+      })
+    })
+    .catch((error) => {
+      console.error(error)
     });
   }
 }

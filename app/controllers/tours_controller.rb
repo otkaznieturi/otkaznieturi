@@ -6,7 +6,7 @@ class ToursController < ApplicationController
   end
 
   def search
-    found = Tour.where('country LIKE ?', "%#{params[:q]}%")
+    found = Tour.where(tour_params)
     render json: { tours: found }, status: :ok
   end
 
