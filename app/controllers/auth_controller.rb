@@ -16,7 +16,7 @@ class AuthController < ApplicationController
 
   def register_user
     user = User.new(user_params)
-    user.activation_token = Digest::MD5.hexdigest(user_params.email)
+    user.activation_token = Digest::MD5.hexdigest(user_params[:email] + 'salt')
     user.save!
     if user.persisted? && user.active_for_authentication?
       AccountActivationMailer.sample_email(user).deliver!
