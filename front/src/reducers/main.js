@@ -15,9 +15,7 @@ export let mainPageReducer = (state = initialState, action) => {
 
     case GET_TOURS_COUNTER_REQUEST:
       return {
-        loading: true,
-        tours: 0,
-        today_tours: 0
+        loading: true
       }
     case GET_TOURS_COUNTER_SUCCESS:
       return {

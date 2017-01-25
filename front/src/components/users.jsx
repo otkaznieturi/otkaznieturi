@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as adminActions from '../actions/admin'
-import {Link} from 'react-router'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
+import {forEach} from 'lodash'
 
 class UsersPage extends Component {
   fetchUsers() {
@@ -14,8 +14,7 @@ class UsersPage extends Component {
   }
   handleDeletedRow(del_data) {
     let fordel_ids = []
-    for(var i in del_data)
-      fordel_ids.push(this.props.admin.users[i].id)
+    forEach(del_data, (i) => {fordel_ids.push(this.props.admin.users[i].id)})
     this.props.actions.delete_users(fordel_ids)
   }
   confirmDelete(next) {
@@ -47,7 +46,7 @@ class UsersPage extends Component {
           </BootstrapTable>
         :
           <div>
-            <div className="text-center">Пользователей нет</div>
+            <div className="text-center"><h4>Пользователей нет</h4></div>
           </div>
         }
       </div>

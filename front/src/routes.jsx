@@ -10,6 +10,7 @@ import {AccountPage, SubscribesPage} from './components/account.jsx'
 import {ToursPage, ShowToursPage, AddToursPage, EditToursPage, SearchToursPage} from './components/tours.jsx'
 import {UsersPage} from './components/users.jsx'
 import ChangeAccPage from './components/auth/change.jsx'
+import ActivatePage from './components/auth/activate.jsx'
 import {App, AdminApp} from './app.jsx'
 
 export const routes = (
@@ -36,6 +37,7 @@ export const routes = (
       </Route>
     </Route>
     <Route path='/' component={MainPage} />
+    <Route path='/activate/:token' component={ActivatePage} />
     <Route path='login' component={LoginPage} />
     <Route path='logout' component={Logout} />
     <Route path='register' component={RegisterPage} />

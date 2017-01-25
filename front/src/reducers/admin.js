@@ -7,8 +7,6 @@ import {
   DELETE_USERS_ERR
 } from '../constants'
 
-import Moment from 'moment'
-
 const initialState = {
   loading: false,
   users: []

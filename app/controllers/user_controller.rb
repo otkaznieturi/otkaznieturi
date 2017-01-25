@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :authenticate_request!
+  before_action :authenticate_request!, except: [:activate]
   before_action :must_be_admin, only: [:users, :delete_users]
 
   def change_pass
@@ -17,6 +17,16 @@ class UserController < ApplicationController
   def users
     users = User.where.not(id: @current_user.id)
     render json: { users: users }
+  end
+
+  def activate
+    user = User.find_by(activation_token: params[:token])
+    if user
+      user.update_attributes!(activation_token: nil)
+      render json: { status: :ok }
+    else
+      render json: { status: :not_found }, status: 404
+    end
   end
 
   def delete_users

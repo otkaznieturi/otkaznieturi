@@ -5,11 +5,14 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_REQUEST,
+  REGISTER_SUCCESS,
   HIDE_MSG,
   ROUTING,
-  loginUrl,
   CHANGE_SUBSCRIBE_SUCCESS,
-  registrationUrl
+  TOKEN_NOT_FOUND,
+  loginUrl,
+  registration_url,
+  activate_acc_url
 } from '../constants'
 
 let login_success = (dispatch, payload) => {
@@ -81,7 +84,7 @@ export let register = (payload) => {
     data.append('email', payload.login)
     data.append('password', payload.pass)
     data.append('password_confirmation', payload.pass_confirm)
-    fetch(registrationUrl, {
+    fetch(registration_url, {
       method: 'POST',
       credentials: 'include',
       body: data
@@ -89,11 +92,18 @@ export let register = (payload) => {
         response.status !== 200 ?
           response.json().then((jsonResp) => { login_fail(dispatch, jsonResp) })
         :
-          response.json().then((jsonResp) => { login_success(dispatch, jsonResp) })
+          response.json().then((jsonResp) => {
+            dispatch({
+              type: REGISTER_SUCCESS,
+              payload: {
+                message: 'Письмо с адресом активации выслано на указанный email'
+              }
+            })
+          })
       })
       .catch((error) => {
         register_fail(dispatch)
-    });
+    })
   }
 }
 
@@ -121,7 +131,7 @@ export let login = (payload) => {
       })
       .catch((error) => {
         login_fail(dispatch)
-    });
+    })
   }
 }
 
@@ -145,5 +155,33 @@ export let logout = (payload) => {
         nextUrl: '/'
       }
     })
+  }
+}
+
+export let activate_account = (payload) => {
+  return (dispatch) => {
+    fetch(activate_acc_url + '?token=' + payload.token, {
+      method: 'GET',
+      credentials: 'include'
+    }).then((response) => {
+        response.status === 404 ?
+          dispatch({
+            type: TOKEN_NOT_FOUND,
+            payload: {
+              activate_error: 'Аккаунт/токен не найден'
+            }
+          })
+        :
+          dispatch({
+            type: ROUTING,
+            payload: {
+              method: 'replace',
+              nextUrl: '/login'
+            }
+          })
+      })
+      .catch((error) => {
+        console.error(error)
+    });
   }
 }

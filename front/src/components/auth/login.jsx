@@ -44,14 +44,12 @@ export class LoginPage extends Component {
                             </Button>
                           </FormGroup>
                         </Form>
-                        { this.props.auth.errors ?
+                        { this.props.auth.errors &&
                           <div className="error_info">
                             <Alert bsStyle="danger">
                               <strong>{this.props.auth.errors}</strong>
                             </Alert>
                           </div>
-                        :
-                          null
                         }
                       </Col>
                     </div>
@@ -59,7 +57,7 @@ export class LoginPage extends Component {
                 }
             </div>
           </div>
-        }        
+        }
       </Col>
     )
   }

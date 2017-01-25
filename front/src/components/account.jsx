@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Col, Nav, NavItem} from 'react-bootstrap'
+import {Nav, NavItem} from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import {Button} from 'react-bootstrap'
 

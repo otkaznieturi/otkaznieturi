@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   put '/api/change_subscribe', to: 'user#change_subscribe'
   get '/api/users', to: 'user#users'
   delete '/api/delete_users', to: 'user#delete_users'
+  get '/api/activate_account', to: 'user#activate'
 
   scope '/api' do
     resources :tours, except: [:new, :edit] do

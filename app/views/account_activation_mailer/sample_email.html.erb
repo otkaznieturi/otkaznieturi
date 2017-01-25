@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>Подтверждение регистрации в сервисе отказных туров</h2>
+    <h4>
+      Для активации Вашего аккаунта "<%= @user.email %>" перейдите по этой <a href="отказныетуры.рф/activate/<%= @user.activation_token %>">ссылке.</a>
+    </h4>
+  </body>
+</html>

@@ -75,7 +75,7 @@ export class RegisterPage extends Component {
                         </FormGroup>
                       }
                     </Form>
-                    { this.props.auth.errors ?
+                    { this.props.auth.errors &&
                       <div className="error_info">
                         <Alert bsStyle="danger">
                           {this.props.auth.errors.map(function(item, index){
@@ -83,8 +83,13 @@ export class RegisterPage extends Component {
                           })}
                         </Alert>
                       </div>
-                    :
-                      null
+                    }
+                    { this.props.auth.message &&
+                      <div className="error_info">
+                        <Alert bsStyle="success">
+                            <strong>{this.props.auth.message}</strong>
+                        </Alert>
+                      </div>
                     }
                   </Col>
                 </div>

@@ -5,7 +5,7 @@ const prefix = '/api/'
 
 // URL's
 export const loginUrl = host + prefix + 'sign_in'
-export const registrationUrl = host + prefix + 'sign_up'
+export const registration_url = host + prefix + 'sign_up'
 export const change_pass_url = host + prefix + 'change_pass'
 export const tours_url = host + prefix + 'tours'
 export const my_tours_url = host + prefix + 'tours/my_tours'
@@ -15,6 +15,7 @@ export const search_tours_url = host + prefix + 'tours/search'
 export const get_users_url = host + prefix + 'users'
 export const change_subscribe_url = host + prefix + 'change_subscribe'
 export const delete_users_url = host + prefix + 'delete_users'
+export const activate_acc_url = host + prefix + 'activate_account'
 
 // REDUX STATES
 // common
@@ -30,6 +31,7 @@ export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const CHANGE_SUBSCRIBE_REQUEST = 'CHANGE_SUBSCRIBE_REQUEST'
 export const CHANGE_SUBSCRIBE_SUCCESS = 'CHANGE_SUBSCRIBE_SUCCESS'
+export const TOKEN_NOT_FOUND = 'TOKEN_NOT_FOUND'
 // account
 export const SETUP_ACCOUNT_REQUEST = 'SETUP_ACCOUNT_REQUEST'
 export const SETUP_ACCOUNT_SUCCESS = 'SETUP_ACCOUNT_SUCCESS'

@@ -19,16 +19,20 @@ class Main extends Component {
       		<h3>
       			Сервис агрегации отказных туров.
       		</h3>
-          <div className="today">
-        		<h5>
-        			<Link to='/tours/today'>Сегодня добавлено туров: {this.props.main.today_tours}</Link>
-            </h5>
-          </div>
-          <div className="all">
-            <h5>
-              <Link to='/tours/all'>Всего туров: {this.props.main.tours}</Link>
-            </h5>
-          </div>
+          { !this.props.loading &&
+            <div className="counters">
+              <div className="today">
+            		<h5>
+            			<Link to='/tours/today'>Сегодня добавлено туров: {this.props.main.today_tours}</Link>
+                </h5>
+              </div>
+              <div className="all">
+                <h5>
+                  <Link to='/tours/all'>Всего туров: {this.props.main.tours}</Link>
+                </h5>
+              </div>
+            </div>
+          }
       	</div>
       </Col>
     )

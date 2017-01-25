@@ -4,6 +4,9 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  TOKEN_NOT_FOUND,
   HIDE_MSG
 } from '../constants'
 
@@ -62,6 +65,26 @@ export let authReducer = (state = initialState, action) => {
         loading: state.loading,
         token: state.token,
         errors: null
+      }
+
+    case REGISTER_REQUEST:
+      return {
+        loading: true,
+      }
+
+    case REGISTER_SUCCESS:
+      return {
+        isAuthenticated: false,
+        loading: false,
+        message: action.payload.message
+      }
+    case TOKEN_NOT_FOUND:
+      return {
+        isAuthenticated: state.isAuthenticated,
+        loading: false,
+        token: state.token,
+        admin: state.admin,
+        activate_error: action.payload.activate_error
       }
 
     default:
