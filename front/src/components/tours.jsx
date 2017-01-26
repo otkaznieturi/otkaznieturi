@@ -298,7 +298,12 @@ class RaterGetter extends Component {
     super(props)
     this.state = {rating: props.rating}
   }
-  render() {return (<span>{this.state.rating}</span>)}
+  render() {
+    if(this.state.rating === undefined)
+      return (<span>Не важно</span>)
+    else
+      return (<span>{this.state.rating}</span>)
+  }
 }
 
 class ChildAgeSetter extends Component {
@@ -342,6 +347,7 @@ class CountrySelect extends Component {
   render() {
     return (
       <FormControl id="country" componentClass="select" placeholder="select" defaultValue={this.state.country} onChange={(e) => this.handleChange(e)}>
+        {this.props.withEmpty && <option value="none">Не важно</option>}
         <optgroup label="Топовые">
           <option value="Болгария">Болгария</option>
           <option value="Греция">Греция</option>
@@ -525,6 +531,7 @@ class TravelAgentSelect extends Component {
   render() {
     return (
       <FormControl id="travel_agent" componentClass="select" placeholder="select" defaultValue={this.state.travel_agent}>
+        {this.props.withEmpty && <option value="none">Не важно</option>}
         <optgroup label="Популярные">
           <option value="Anex">Anex</option>
           <option value="Biblio Globus">Biblio Globus</option>
@@ -867,8 +874,10 @@ class SearchForm extends Component {
   handleSearch(e) {
     e.preventDefault()
     let data = {}
-    forEach(e.target.elements, (v) => {if(v.value) data[v.id] = v.value})
+    forEach(e.target.elements, (v) => {if(v.value && v.value !== 'none') data[v.id] = v.value})
+    if(!!this.adult_count.state.rating)
     data.adult_count = this.adult_count.state.rating
+    if(!!this.child_count.state.rating)
     data.child_count = this.child_count.state.rating
     this.props.handleSearch(data)
   }
@@ -877,7 +886,7 @@ class SearchForm extends Component {
       <Form onSubmit={this.handleSearch.bind(this)}>
         <Col lg={3} md={6} sm={12}>
           <ControlLabel>Страна:</ControlLabel>
-          <CountrySelect />
+          <CountrySelect withEmpty={true} />
         </Col>
         <Col lg={3} md={6} sm={12}>
           <ControlLabel>Город:</ControlLabel>
@@ -899,29 +908,29 @@ class SearchForm extends Component {
         </Col>
         <Col lg={3} md={6} sm={12}>
           <ControlLabel>Туроператор:</ControlLabel>
-          <TravelAgentSelect />
+          <TravelAgentSelect withEmpty={true} />
         </Col>
         <Col lg={3} md={6} sm={12}>
           <ControlLabel>Количество ночей:</ControlLabel>
           <FormControl id="nights" componentClass="select" placeholder="select">
+            <option key='none' value='none'>Не важно</option>
             {[...Array(29)].map((x, i) =>
               <option key={i + 1} value={i + 1}>{i + 1}</option>
             )}
           </FormControl>
         </Col>
         <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Количество взрослых: <RaterGetter rating={1} ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
-          <Rater rating={1} total={4} onRate={(e) => {this.adult_count_shower.setState({rating: e.rating})}} ref={(rater) => { this.adult_count = rater; }}>
+          <ControlLabel>Количество взрослых: <RaterGetter ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
+          <Rater total={4} onRate={(e) => {this.adult_count_shower.setState({rating: e.rating || undefined})}} ref={(rater) => { this.adult_count = rater; }}>
             <RaterStar view_type="parent" />
           </Rater>
         </Col>
         <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Количество детей: <RaterGetter rating={0} ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
+          <ControlLabel>Количество детей: <RaterGetter ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
           <Rater
-            rating={0}
             total={3}
             onRate={(e) => {
-              this.child_count_shower.setState({rating: e.rating})
+              this.child_count_shower.setState({rating: e.rating || undefined})
             }}
             ref={(rater) => { this.child_count = rater; }}>
             <RaterStar view_type="child" />
