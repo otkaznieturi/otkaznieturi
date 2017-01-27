@@ -23,33 +23,38 @@ class UsersPage extends Component {
   }
   render() {
     return (
-      <div className='users'>
-        { this.props.admin.users  && this.props.admin.users.length > 0 ?
-          <BootstrapTable
-            data={ this.props.admin.users }
-            pagination
-            striped
-            condensed
-            search
-            deleteRow
-            selectRow={{mode: 'checkbox', clickToSelect: true}}
-            searchPlaceholder='Поиск по таблице...'
-            options={{
-              afterDeleteRow: this.handleDeletedRow.bind(this),
-              deleteText: 'Удалить',
-              handleConfirmDeleteRow: this.confirmDelete
-            }}
-            hover>
-            <TableHeaderColumn dataField='id' isKey={true} dataSort={ true }>ID</TableHeaderColumn>
-            <TableHeaderColumn dataField='email' dataSort={ true }>Email</TableHeaderColumn>
-            <TableHeaderColumn dataField='created_at' dataSort={ true }>Дата регистрации</TableHeaderColumn>
-          </BootstrapTable>
-        :
-          <div>
-            <div className="text-center"><h4>Пользователей нет</h4></div>
-          </div>
-        }
-      </div>
+      this.props.admin.loading ?
+        <div className='loading_wrapper'>
+          <div className='loading'></div>
+        </div>
+      :
+        <div className='users'>
+          { this.props.admin.users  && this.props.admin.users.length > 0 ?
+            <BootstrapTable
+              data={ this.props.admin.users }
+              pagination
+              striped
+              condensed
+              search
+              deleteRow
+              selectRow={{mode: 'checkbox', clickToSelect: true}}
+              searchPlaceholder='Поиск по таблице...'
+              options={{
+                afterDeleteRow: this.handleDeletedRow.bind(this),
+                deleteText: 'Удалить',
+                handleConfirmDeleteRow: this.confirmDelete
+              }}
+              hover>
+              <TableHeaderColumn dataField='id' isKey={true} dataSort={ true }>ID</TableHeaderColumn>
+              <TableHeaderColumn dataField='email' dataSort={ true }>Email</TableHeaderColumn>
+              <TableHeaderColumn dataField='created_at' dataSort={ true }>Дата регистрации</TableHeaderColumn>
+            </BootstrapTable>
+          :
+            <div>
+              <div className="text-center"><h4>Пользователей нет</h4></div>
+            </div>
+          }
+        </div>
     )
   }
 }

@@ -11,13 +11,13 @@ import {
 } from '../constants'
 
 let token = localStorage.getItem('bearer')
-let admin = localStorage.getItem('ca')
+let admin = !(localStorage.getItem('ca') === 'null' || localStorage.getItem('ca') === 'false')
 
 const initialState = {
   isAuthenticated: !!token,
   loading: false,
   token: token ? token : null,
-  admin: !!admin
+  admin: admin
 }
 
 export let authReducer = (state = initialState, action) => {

@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   before_action :authenticate_request!, except: [:activate]
-  before_action :must_be_admin, only: [:users, :delete_users]
+  before_action :must_be_admin!, only: [:users, :delete_users]
 
   def change_pass
     user = @current_user
@@ -46,7 +46,7 @@ class UserController < ApplicationController
     params.permit(:old_pass, :new_pass, :new_pass_confirm)
   end
 
-  def must_be_admin
-    return unless @current_user.admin
+  def must_be_admin!
+    return render json: { errors: ['Not Allowed'] }, status: :forbidden unless @current_user.admin
   end
 end
