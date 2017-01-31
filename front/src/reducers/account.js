@@ -16,7 +16,8 @@ import {
   CHANGE_SUBSCRIBE_SUCCESS,
   SEARCH_TOURS_REQUEST,
   SEARCH_TOURS_SUCCESS,
-  HIDE_MSG
+  HIDE_MSG,
+  REFRESH_AVAILABLE_COUNTRIES
 } from '../constants'
 
 let sub = localStorage.getItem('sub')
@@ -107,13 +108,21 @@ export let accountReducer = (state = initialState, action) => {
     case SEARCH_TOURS_REQUEST:
       return {
         loading: true,
-        init_found: false
+        init_found: false,
+        available_countries: state.available_countries
       }
     case SEARCH_TOURS_SUCCESS:
       return {
         loading: false,
         tours: action.payload.tours,
-        init_found: true
+        init_found: true,
+        available_countries: state.available_countries
+      }
+    case REFRESH_AVAILABLE_COUNTRIES:
+      return {
+        loading: state.loading,
+        subscribe: state.subscribe,
+        available_countries: action.payload.countries
       }
 
     case HIDE_MSG:

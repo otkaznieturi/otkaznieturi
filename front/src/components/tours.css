@@ -13,6 +13,9 @@
 .react-rater {
   line-height: normal;
 }
+.search_rater .react-rater {
+  padding-top: 7px;
+}
 .react-rater a {
   cursor: pointer;
   color: #ccc;
@@ -35,6 +38,10 @@
 }
 .react-rater a.is-disabled {
   cursor: default;
+}
+
+.search_form .control-label {
+  padding-top: 12px;
 }
 
 form .react-rater a {

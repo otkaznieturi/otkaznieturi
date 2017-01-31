@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get 'my_tours', to: 'tours#my_tours'
         get 'today_tours', to: 'tours#today_tours'
         get 'counters', to: 'tours#tours_counters'
+        get 'available_countries', to: 'tours#available_countries'
       end
     end
   end

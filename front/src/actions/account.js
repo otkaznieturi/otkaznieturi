@@ -16,6 +16,7 @@ import {
   CHANGE_SUBSCRIBE_SUCCESS,
   SEARCH_TOURS_REQUEST,
   SEARCH_TOURS_SUCCESS,
+  REFRESH_AVAILABLE_COUNTRIES,
   HIDE_MSG,
   ROUTING,
   change_pass_url,
@@ -23,7 +24,8 @@ import {
   tours_url,
   today_tours_url,
   change_subscribe_url,
-  search_tours_url
+  search_tours_url,
+  available_countries_url
 } from '../constants'
 
 import {forEach} from 'lodash'
@@ -325,6 +327,30 @@ export let search_tours = (payload) => {
           type: SEARCH_TOURS_SUCCESS,
           payload: {
             tours: jsonResp.tours
+          }
+        })
+      })
+    })
+    .catch((error) => {
+      console.error(error)
+    });
+  }
+}
+
+export let get_available_countries = (payload) => {
+  return (dispatch) => {
+    fetch(available_countries_url, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'GET',
+      credentials: 'include'
+    }).then((response) => {
+      response.json().then((jsonResp) => {
+        dispatch({
+          type: REFRESH_AVAILABLE_COUNTRIES,
+          payload: {
+            countries: jsonResp.countries
           }
         })
       })

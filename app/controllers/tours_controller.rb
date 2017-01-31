@@ -69,6 +69,11 @@ class ToursController < ApplicationController
     end
   end
 
+  def available_countries
+    countries = Tour.pluck(:country).uniq!
+    render json: { countries: countries }
+  end
+
   def self.deliver_notifications(tour)
     users = User.where(tours_subscribe: true).pluck(:email)
     ToursMailer.sample_email(users, tour).deliver!

@@ -161,8 +161,8 @@ class ShowToursPage extends Component {
               <dd>{this.props.account.tour.dinner}</dd>
               <dt className='departure_date'>Дата вылета</dt><dd>{DateTime.moment(this.props.account.tour.departure_date).format("DD.MM.YYYY")}</dd>
               <dt className='nights'>Количество ночей</dt><dd>{this.props.account.tour.nights}</dd>
-              <dt className='adult_count'>Количество взрослых</dt><dd>{this.props.account.tour.adult_count}</dd>
-              <dt className='child_count'>Количество детей</dt><dd>{this.props.account.tour.child_count}</dd>
+              <dt className='adult_count'>Взрослые</dt><dd>{this.props.account.tour.adult_count}</dd>
+              <dt className='child_count'>Дети</dt><dd>{this.props.account.tour.child_count}</dd>
               <dt className='child_ages'>Возраст каждого ребенка</dt><dd>{this.props.account.tour.child_ages}</dd>
               <dt className='information'>Общая информация по перелету</dt><dd>{this.props.account.tour.information}</dd>
               <dt className='transfer'>Трансфер</dt><dd>{this.props.account.tour.transfer}</dd>
@@ -345,6 +345,17 @@ class CountrySelect extends Component {
     this.setState({country: event.target.value})
   }
   render() {
+    if(this.props.available_countries)
+      return (
+        <FormControl id="country" componentClass="select" placeholder="select" defaultValue={this.state.country} onChange={(e) => this.handleChange(e)}>
+          {
+            this.props.available_countries.map((item, i) => {
+              return <option key={i} value={item}>{item}</option>
+            })
+          }
+        </FormControl>
+      )
+    else
     return (
       <FormControl id="country" componentClass="select" placeholder="select" defaultValue={this.state.country} onChange={(e) => this.handleChange(e)}>
         {this.props.withEmpty && <option value="none">Не важно</option>}
@@ -706,11 +717,11 @@ class TourForm extends Component {
             <option key={i + 1} value={i + 1}>{i + 1}</option>
           )}
         </FormControl>
-        <ControlLabel>Количество взрослых: <RaterGetter rating={values.adult_count || 1} ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
+        <ControlLabel>Взрослые: <RaterGetter rating={values.adult_count || 1} ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
         <Rater rating={values.adult_count || 1} total={4} onRate={(e) => {this.adult_count_shower.setState({rating: e.rating})}} ref={(rater) => { this.adult_count = rater; }}>
           <RaterStar view_type="parent" />
         </Rater>
-        <ControlLabel>Количество детей: <RaterGetter rating={values.child_count || 0} ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
+        <ControlLabel>Дети: <RaterGetter rating={values.child_count || 0} ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
         <Rater
           rating={values.child_count || 0}
           total={3}
@@ -883,10 +894,10 @@ class SearchForm extends Component {
   }
   render() {
     return (
-      <Form onSubmit={this.handleSearch.bind(this)}>
+      <Form className='search_form' onSubmit={this.handleSearch.bind(this)}>
         <Col lg={3} md={6} sm={12}>
           <ControlLabel>Страна:</ControlLabel>
-          <CountrySelect withEmpty={true} />
+          <CountrySelect available_countries={this.props.available_countries} withEmpty={true} />
         </Col>
         <Col lg={3} md={6} sm={12}>
           <ControlLabel>Город:</ControlLabel>
@@ -919,14 +930,14 @@ class SearchForm extends Component {
             )}
           </FormControl>
         </Col>
-        <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Количество взрослых: <RaterGetter ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
+        <Col className='search_rater' lg={3} md={6} sm={12}>
+          <ControlLabel>Взрослые: <RaterGetter ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
           <Rater total={4} onRate={(e) => {this.adult_count_shower.setState({rating: e.rating || undefined})}} ref={(rater) => { this.adult_count = rater; }}>
             <RaterStar view_type="parent" />
           </Rater>
         </Col>
-        <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Количество детей: <RaterGetter ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
+        <Col className='search_rater' lg={3} md={6} sm={12}>
+          <ControlLabel>Дети: <RaterGetter ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
           <Rater
             total={3}
             onRate={(e) => {
@@ -944,7 +955,7 @@ class SearchForm extends Component {
             placeholder="Стоимость тура"
           />
         </Col>
-        <Col lg={3} md={6} sm={12}>
+        <Col lg={12} md={12} sm={12}>
           <br />
           <Button bsStyle="primary" type="submit">
             Поиск
@@ -956,6 +967,9 @@ class SearchForm extends Component {
 }
 
 class SearchToursPage extends Component {
+  componentWillMount() {
+    this.props.actions.get_available_countries()
+  }
   fetchSearchTours(data) {
     this.props.actions.search_tours(data)
   }
@@ -978,8 +992,8 @@ class SearchToursPage extends Component {
     return (
       <div className="search_page">
         <TourNav />
-        <SearchForm handleSearch={this.fetchSearchTours.bind(this)}/>
-        <Col lg={12} md={12} sm={12} className="search_form">
+        <SearchForm available_countries={this.props.account.available_countries} handleSearch={this.fetchSearchTours.bind(this)}/>
+        <Col lg={12} md={12} sm={12} className="search_form_wrapper">
           {
             this.props.account.loading ?
               <div className='loading_wrapper'>
