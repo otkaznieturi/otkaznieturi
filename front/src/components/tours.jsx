@@ -99,9 +99,6 @@ class TourNav extends Component {
         <LinkContainer to="/tours/search">
           <NavItem eventKey={3}>Глобальный поиск</NavItem>
         </LinkContainer>
-        <LinkContainer to="/tours/add">
-          <NavItem eventKey={4}>Добавить тур</NavItem>
-        </LinkContainer>
       </Nav>
     )
   }
@@ -160,6 +157,7 @@ class ShowToursPage extends Component {
               </dt>
               <dd>{this.props.account.tour.dinner}</dd>
               <dt className='departure_date'>Дата вылета</dt><dd>{DateTime.moment(this.props.account.tour.departure_date).format("DD.MM.YYYY")}</dd>
+              <dt className='departure_city'>Город вылета</dt><dd>{this.props.account.tour.departure_city}</dd>
               <dt className='nights'>Количество ночей</dt><dd>{this.props.account.tour.nights}</dd>
               <dt className='adult_count'>Взрослые</dt><dd>{this.props.account.tour.adult_count}</dd>
               <dt className='child_count'>Дети</dt><dd>{this.props.account.tour.child_count}</dd>
@@ -210,7 +208,6 @@ class AddToursPage extends Component {
   render() {
     return(
       <div className="tour_form">
-        <TourNav />
         <h3>Создание тура</h3>
         <TourForm
           handlerSubmit={this.handleSubmit.bind(this)}
@@ -639,6 +636,27 @@ class TravelAgentSelect extends Component {
   }
 }
 
+class AirportCitySelect extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {departure_city: props.departure_city}
+  }
+  handleChange(event) {
+    this.setState({departure_city: event.target.value})
+  }
+  render() {
+    return (
+      <FormControl id="departure_city" componentClass="select" placeholder="select" defaultValue={this.state.departure_city}>
+        {this.props.withEmpty && <option value="none">Не важно</option>}
+        <optgroup label="Центральные">
+        </optgroup>
+        <optgroup label="Остальные">
+        </optgroup>
+      </FormControl>
+    )
+  }
+}
+
 class TourForm extends Component {
   handle(e) {
     e.preventDefault()
@@ -711,6 +729,8 @@ class TourForm extends Component {
           defaultValue={DateTime.moment(values.departure_date)}
           isValidDate={ (current) => { return current.isAfter( DateTime.moment().subtract(1, 'day') ) } }
         />
+        <ControlLabel>Город вылета:</ControlLabel>
+        <AirportCitySelect travel_agent={values.departure_city} />
         <ControlLabel>Количество ночей:</ControlLabel>
         <FormControl id="nights" componentClass="select" placeholder="select" defaultValue={values.nights}>
           {[...Array(29)].map((x, i) =>

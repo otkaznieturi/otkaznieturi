@@ -1,9 +1,5 @@
 class ToursController < ApplicationController
-  before_action :authenticate_request!, except: [:tours_counters]
-
-  def tours_counters
-    render json: { tours: Tour.count, today_tours: Tour.where("created_at >= ?", Time.zone.now.beginning_of_day).count }, status: :ok
-  end
+  before_action :authenticate_request!
 
   def search
     found = Tour.where(tour_params)
@@ -91,6 +87,7 @@ class ToursController < ApplicationController
       :room_rating,
       :dinner,
       :departure_date,
+      :departure_city,
       :nights,
       :adult_count,
       :child_count,

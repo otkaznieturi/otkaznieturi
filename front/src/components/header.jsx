@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Nav, Navbar, NavItem, Glyphicon } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
-import { LinkContainer } from 'react-router-bootstrap'
+import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap'
 
 export class Header extends Component {
   static defaultProps = {
@@ -14,15 +14,13 @@ export class Header extends Component {
       return (
         <Navbar fluid>
           <Nav>
-            <LinkContainer to="/">
-              <NavItem>
-                Главная
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to="/tours">
-              <NavItem>
+            <IndexLinkContainer to="/tours">
+              <NavItem eventKey={1}>
                 <i className="fa fa-plane fa-lg" aria-hidden="true"></i> Туры
               </NavItem>
+            </IndexLinkContainer>
+            <LinkContainer to="/tours/add">
+              <NavItem eventKey={2}>Добавить тур</NavItem>
             </LinkContainer>
             {
               this.props.auth.admin &&
@@ -35,37 +33,13 @@ export class Header extends Component {
           </Nav>
           <Nav pullRight={true}>
             <LinkContainer to="/account">
-              <NavItem>
+              <NavItem eventKey={3}>
                 <Glyphicon glyph="user"/> Аккаунт
               </NavItem>
             </LinkContainer>
             <LinkContainer to="/logout">
-              <NavItem>
+              <NavItem eventKey={4}>
                 <i className="fa fa-sign-out fa-lg" aria-hidden="true"></i> Выход
-              </NavItem>
-            </LinkContainer>
-          </Nav>
-        </Navbar>
-      )
-    } else {
-      return (
-        <Navbar fluid>
-          <Nav>
-            <LinkContainer to="/">
-              <NavItem>
-                Главная
-              </NavItem>
-            </LinkContainer>
-          </Nav>
-          <Nav pullRight={true}>
-            <LinkContainer to="/login">
-              <NavItem>
-                Войти
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to="/register">
-              <NavItem>
-                Регистрация
               </NavItem>
             </LinkContainer>
           </Nav>

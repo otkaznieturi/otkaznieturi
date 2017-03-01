@@ -9,32 +9,12 @@ import {Col} from 'react-bootstrap'
 
 class Main extends Component {
   componentWillMount() {
-    this.props.actions.get_tour_counters()
+    let route = this.props.auth.isAuthenticated ? '/tours' : '/login'
+    this.props.router.replace(route)
   }
   render() {
     return (
-      <Col lg={8} lgOffset={2} md={12} sm={12}>
-      	<Header/>
-      	<div className='header text-center'>
-      		<h3>
-      			Сервис агрегации отказных туров.
-      		</h3>
-          { !this.props.loading &&
-            <div className="counters">
-              <div className="today">
-            		<h5>
-            			<Link to='/tours/today'>Сегодня добавлено туров: {this.props.main.today_tours}</Link>
-                </h5>
-              </div>
-              <div className="all">
-                <h5>
-                  <Link to='/tours/all'>Всего туров: {this.props.main.tours}</Link>
-                </h5>
-              </div>
-            </div>
-          }
-      	</div>
-      </Col>
+      <div></div>
     )
   }
 }
@@ -42,7 +22,8 @@ class Main extends Component {
 
 let mapStateToProps = (state) => {
   return {
-    main: state.main
+    main: state.main,
+    auth: state.auth
   }
 }
 

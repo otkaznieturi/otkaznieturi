@@ -15,7 +15,6 @@ export class LoginPage extends Component {
   render() {
     return (
       <Col lg={8} lgOffset={2} md={12} sm={12}>
-        <Header/>
         {
           <div>
             <div className="login_form">
@@ -28,7 +27,11 @@ export class LoginPage extends Component {
                 :
                   <div>
                     <div className="row text-center">
-                      <Col mdOffset={4} md={4} smOffset={3} sm={6}>
+                      <Col mdOffset={3} md={6} smOffset={2} sm={8}>
+                        <p className="text-center">
+                          Для того, чтобы присоединиться напишите нам на e-mail: otkaztur@gmail.com<br/>
+В письме пришлите название компании, город и юридический адрес
+                        </p>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                           <FormGroup controlId="formHorizontalEmail">
                             Email
@@ -40,7 +43,7 @@ export class LoginPage extends Component {
                           </FormGroup>
                           <FormGroup>
                             <Button bsStyle='primary' type="submit">
-                              Авторизация
+                              Войти
                             </Button>
                           </FormGroup>
                         </Form>

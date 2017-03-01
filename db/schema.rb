@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125095131) do
+ActiveRecord::Schema.define(version: 20170301190325) do
 
   create_table "tours", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string   "agency"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20170125095131) do
     t.integer  "original_cost"
     t.integer  "real_cost"
     t.integer  "user_id"
+    t.string   "departure_city"
     t.index ["user_id"], name: "index_tours_on_user_id", using: :btree
   end
 

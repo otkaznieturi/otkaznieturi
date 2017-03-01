@@ -14,7 +14,7 @@ class UsersPage extends Component {
   }
   handleDeletedRow(del_data) {
     let fordel_ids = []
-    forEach(del_data, (i) => {fordel_ids.push(this.props.admin.users[i].id)})
+    forEach(this.props.admin.users, i => {if(~del_data.indexOf(i.id)) fordel_ids.push(i.id)})
     this.props.actions.delete_users(fordel_ids)
   }
   confirmDelete(next) {

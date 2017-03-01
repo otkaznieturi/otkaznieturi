@@ -4,7 +4,6 @@ import { Route, IndexRedirect } from 'react-router'
 import LoginPage from './components/auth/login.jsx'
 import Logout from './components/auth/logout.jsx'
 import MainPage from './components/main.jsx'
-import RegisterPage from './components/auth/register.jsx'
 import NotFound from './components/not_found.jsx'
 import {AccountPage, SubscribesPage} from './components/account.jsx'
 import {ToursPage, ShowToursPage, AddToursPage, EditToursPage, SearchToursPage} from './components/tours.jsx'
@@ -40,7 +39,6 @@ export const routes = (
     <Route path='/activate/:token' component={ActivatePage} />
     <Route path='login' component={LoginPage} />
     <Route path='logout' component={Logout} />
-    <Route path='register' component={RegisterPage} />
     <Route path='*' component={NotFound} />
   </div>
 )
