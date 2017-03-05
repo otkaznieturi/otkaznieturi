@@ -345,6 +345,7 @@ class CountrySelect extends Component {
     if(this.props.available_countries)
       return (
         <FormControl id="country" componentClass="select" placeholder="select" defaultValue={this.state.country} onChange={(e) => this.handleChange(e)}>
+          {this.props.withEmpty && <option value="none">Не важно</option>}
           {
             this.props.available_countries.map((item, i) => {
               return <option key={i} value={item}>{item}</option>
@@ -353,178 +354,178 @@ class CountrySelect extends Component {
         </FormControl>
       )
     else
-    return (
-      <FormControl id="country" componentClass="select" placeholder="select" defaultValue={this.state.country} onChange={(e) => this.handleChange(e)}>
-        {this.props.withEmpty && <option value="none">Не важно</option>}
-        <optgroup label="Топовые">
-          <option value="Болгария">Болгария</option>
-          <option value="Греция">Греция</option>
-          <option value="Доминикана">Доминикана</option>
-          <option value="Израиль">Израиль</option>
-          <option value="Испания">Испания</option>
-          <option value="Италия">Италия</option>
-          <option value="Китай">Китай</option>
-          <option value="Кипр">Кипр</option>
-          <option value="Куба">Куба</option>
-          <option value="Мальдивы">Мальдивы</option>
-          <option value="Мальта">Мальта</option>
-          <option value="Марокко">Марокко</option>
-          <option value="Монако">Монако</option>
-          <option value="ОАЭ">ОАЭ</option>
-          <option value="Португалия">Португалия</option>
-          <option value="Россия">Россия</option>
-          <option value="Таиланд">Таиланд</option>
-          <option value="Тунис">Тунис</option>
-          <option value="Турция">Турция</option>
-          <option value="Франция">Франция</option>
-          <option value="Хорватия">Хорватия</option>
-          <option value="Черногория">Черногория</option>
-          <option value="Чехия">Чехия</option>
-          <option value="Швеция">Швеция</option>
-          <option value="Шри-Ланка">Шри-Ланка</option>
-        </optgroup>
-        <optgroup label="Популярные">
-          <option value="Австрия">Австрия</option>
-          <option value="Багамы">Багамы</option>
-          <option value="Барбадос">Барбадос</option>
-          <option value="Беларусь">Беларусь</option>
-          <option value="Бельгия">Бельгия</option>
-          <option value="Бразилия">Бразилия</option>
-          <option value="Великобритания">Великобритания</option>
-          <option value="Венгрия">Венгрия</option>
-          <option value="Вьетнам">Вьетнам</option>
-          <option value="Германия">Германия</option>
-          <option value="Индия">Индия</option>
-          <option value="Ирландия">Ирландия</option>
-          <option value="Камбоджа">Камбоджа</option>
-          <option value="Латвия">Латвия</option>
-          <option value="Литва">Литва</option>
-          <option value="Маврикий">Маврикий</option>
-          <option value="Мьянма (Бирма)">Мьянма (Бирма)</option>
-          <option value="Нидерланды">Нидерланды</option>
-          <option value="Новая Зеландия">Новая Зеландия</option>
-          <option value="Норвегия">Норвегия</option>
-          <option value="Польша">Польша</option>
-          <option value="Сейшелы">Сейшелы</option>
-          <option value="Сингапур">Сингапур</option>
-          <option value="Словакия">Словакия</option>
-          <option value="Словения">Словения</option>
-          <option value="США">США</option>
-          <option value="Украина">Украина</option>
-          <option value="Швейцария">Швейцария</option>
-          <option value="Финляндия">Финляндия</option>
-          <option value="Эстония">Эстония</option>
-          <option value="Ямайка">Ямайка</option>
-        </optgroup>
-        <optgroup label="Остальные">
-          <option value="Абхазия">Абхазия</option>
-          <option value="Австралия">Австралия</option>
-          <option value="Азербайджан">Азербайджан</option>
-          <option value="Албания">Албания</option>
-          <option value="Ангилья">Ангилья</option>
-          <option value="Андорра">Андорра</option>
-          <option value="Антарктида">Антарктида</option>
-          <option value="Антигуа">Антигуа</option>
-          <option value="Аргентина">Аргентина</option>
-          <option value="Армения">Армения</option>
-          <option value="Аруба">Аруба</option>
-          <option value="Бангладеш">Бангладеш</option>
-          <option value="Бахрейн">Бахрейн</option>
-          <option value="Белиз">Белиз</option>
-          <option value="Бермудские острова">Бермудские острова</option>
-          <option value="Боливия">Боливия</option>
-          <option value="Босния и Герцеговина">Босния и Герцеговина</option>
-          <option value="Ботсвана">Ботсвана</option>
-          <option value="Бруней">Бруней</option>
-          <option value="Буркина-Фасо">Буркина-Фасо</option>
-          <option value="Бурунди">Бурунди</option>
-          <option value="Бутан">Бутан</option>
-          <option value="Венесуэла">Венесуэла</option>
-          <option value="Гана">Гана</option>
-          <option value="Гваделупа">Гваделупа</option>
-          <option value="Гватемала">Гватемала</option>
-          <option value="Гондурас">Гондурас</option>
-          <option value="Гонконг">Гонконг</option>
-          <option value="Гренада">Гренада</option>
-          <option value="Гренландия">Гренландия</option>
-          <option value="Грузия">Грузия</option>
-          <option value="Дания">Дания</option>
-          <option value="Джибути">Джибути</option>
-          <option value="Доминика">Доминика</option>
-          <option value="Замбия">Замбия</option>
-          <option value="Зимбабве">Зимбабве</option>
-          <option value="Индонезия">Индонезия</option>
-          <option value="Иордания">Иордания</option>
-          <option value="Иран">Иран</option>
-          <option value="Исландия">Исландия</option>
-          <option value="Кабо-Верде">Кабо-Верде</option>
-          <option value="Казахстан">Казахстан</option>
-          <option value="Камерун">Камерун</option>
-          <option value="Канада">Канада</option>
-          <option value="Катар">Катар</option>
-          <option value="Кения">Кения</option>
-          <option value="Колумбия">Колумбия</option>
-          <option value="Коста-Рика">Коста-Рика</option>
-          <option value="Кыргызcтан">Кыргызcтан</option>
-          <option value="Лаос">Лаос</option>
-          <option value="Ливан">Ливан</option>
-          <option value="Лихтенштейн">Лихтенштейн</option>
-          <option value="Люксембург">Люксембург</option>
-          <option value="Мадагаскар">Мадагаскар</option>
-          <option value="Македония">Македония</option>
-          <option value="Малайзия">Малайзия</option>
-          <option value="Марианские о-ва">Марианские о-ва</option>
-          <option value="Мартиника">Мартиника</option>
-          <option value="Мексика">Мексика</option>
-          <option value="Мозамбик">Мозамбик</option>
-          <option value="Молдавия">Молдавия</option>
-          <option value="Монголия">Монголия</option>
-          <option value="Намибия">Намибия</option>
-          <option value="Непал">Непал</option>
-          <option value="Нигерия">Нигерия</option>
-          <option value="Никарагуа">Никарагуа</option>
-          <option value="о. Кука">о. Кука</option>
-          <option value="Оман">Оман</option>
-          <option value="Пакистан">Пакистан</option>
-          <option value="Палау">Палау</option>
-          <option value="Панама">Панама</option>
-          <option value="Папуа Новая Гвинея">Гвинея</option>
-          <option value="Парагвай">Парагвай</option>
-          <option value="Перу">Перу</option>
-          <option value="Реюньон">Реюньон</option>
-          <option value="Румыния">Румыния</option>
-          <option value="Сан-Марино">Марино</option>
-          <option value="Саудовская Аравия">Аравия</option>
-          <option value="Свазиленд">Свазиленд</option>
-          <option value="Северная Корея">Северная Корея</option>
-          <option value="Сенегал">Сенегал</option>
-          <option value="Сен-Мартен">Мартен</option>
-          <option value="Сент-Винсент и Гренадины">Сент-Винсент и Гренадины</option>
-          <option value="Сент-Китс и Невис">Сент-Китс и Невис</option>
-          <option value="Сент-Люсия">Сент-Люсия</option>
-          <option value="Сербия">Сербия</option>
-          <option value="Сирия">Сирия</option>
-          <option value="Танзания">Танзания</option>
-          <option value="Теркс и Кайкос">Теркс и Кайкос</option>
-          <option value="Того">Того</option>
-          <option value="Туркменистан">Туркменистан</option>
-          <option value="Уганда">Уганда</option>
-          <option value="Узбекистан">Узбекистан</option>
-          <option value="Уругвай">Уругвай</option>
-          <option value="Фиджи">Фиджи</option>
-          <option value="Филиппины">Филиппины</option>
-          <option value="Французская Полинезия">Полинезия</option>
-          <option value="ЦАР">ЦАР</option>
-          <option value="Чили">Чили</option>
-          <option value="Эквадор">Эквадор</option>
-          <option value="Эритрея">Эритрея</option>
-          <option value="Эфиопия">Эфиопия</option>
-          <option value="ЮАР">ЮАР</option>
-          <option value="Южная Корея">Южная Корея</option>
-          <option value="Япония">Япония</option>
-        </optgroup>
-      </FormControl>
-    )
+      return (
+        <FormControl id="country" componentClass="select" placeholder="select" defaultValue={this.state.country} onChange={(e) => this.handleChange(e)}>
+          {this.props.withEmpty && <option value="none">Не важно</option>}
+          <optgroup label="Топовые">
+            <option value="Болгария">Болгария</option>
+            <option value="Греция">Греция</option>
+            <option value="Доминикана">Доминикана</option>
+            <option value="Израиль">Израиль</option>
+            <option value="Испания">Испания</option>
+            <option value="Италия">Италия</option>
+            <option value="Китай">Китай</option>
+            <option value="Кипр">Кипр</option>
+            <option value="Куба">Куба</option>
+            <option value="Мальдивы">Мальдивы</option>
+            <option value="Мальта">Мальта</option>
+            <option value="Марокко">Марокко</option>
+            <option value="Монако">Монако</option>
+            <option value="ОАЭ">ОАЭ</option>
+            <option value="Португалия">Португалия</option>
+            <option value="Россия">Россия</option>
+            <option value="Таиланд">Таиланд</option>
+            <option value="Тунис">Тунис</option>
+            <option value="Турция">Турция</option>
+            <option value="Франция">Франция</option>
+            <option value="Хорватия">Хорватия</option>
+            <option value="Черногория">Черногория</option>
+            <option value="Чехия">Чехия</option>
+            <option value="Швеция">Швеция</option>
+            <option value="Шри-Ланка">Шри-Ланка</option>
+          </optgroup>
+          <optgroup label="Популярные">
+            <option value="Австрия">Австрия</option>
+            <option value="Багамы">Багамы</option>
+            <option value="Барбадос">Барбадос</option>
+            <option value="Беларусь">Беларусь</option>
+            <option value="Бельгия">Бельгия</option>
+            <option value="Бразилия">Бразилия</option>
+            <option value="Великобритания">Великобритания</option>
+            <option value="Венгрия">Венгрия</option>
+            <option value="Вьетнам">Вьетнам</option>
+            <option value="Германия">Германия</option>
+            <option value="Индия">Индия</option>
+            <option value="Ирландия">Ирландия</option>
+            <option value="Камбоджа">Камбоджа</option>
+            <option value="Латвия">Латвия</option>
+            <option value="Литва">Литва</option>
+            <option value="Маврикий">Маврикий</option>
+            <option value="Мьянма (Бирма)">Мьянма (Бирма)</option>
+            <option value="Нидерланды">Нидерланды</option>
+            <option value="Новая Зеландия">Новая Зеландия</option>
+            <option value="Норвегия">Норвегия</option>
+            <option value="Польша">Польша</option>
+            <option value="Сейшелы">Сейшелы</option>
+            <option value="Сингапур">Сингапур</option>
+            <option value="Словакия">Словакия</option>
+            <option value="Словения">Словения</option>
+            <option value="США">США</option>
+            <option value="Украина">Украина</option>
+            <option value="Швейцария">Швейцария</option>
+            <option value="Финляндия">Финляндия</option>
+            <option value="Эстония">Эстония</option>
+            <option value="Ямайка">Ямайка</option>
+          </optgroup>
+          <optgroup label="Остальные">
+            <option value="Абхазия">Абхазия</option>
+            <option value="Австралия">Австралия</option>
+            <option value="Азербайджан">Азербайджан</option>
+            <option value="Албания">Албания</option>
+            <option value="Ангилья">Ангилья</option>
+            <option value="Андорра">Андорра</option>
+            <option value="Антарктида">Антарктида</option>
+            <option value="Антигуа">Антигуа</option>
+            <option value="Аргентина">Аргентина</option>
+            <option value="Армения">Армения</option>
+            <option value="Аруба">Аруба</option>
+            <option value="Бангладеш">Бангладеш</option>
+            <option value="Бахрейн">Бахрейн</option>
+            <option value="Белиз">Белиз</option>
+            <option value="Бермудские острова">Бермудские острова</option>
+            <option value="Боливия">Боливия</option>
+            <option value="Босния и Герцеговина">Босния и Герцеговина</option>
+            <option value="Ботсвана">Ботсвана</option>
+            <option value="Бруней">Бруней</option>
+            <option value="Буркина-Фасо">Буркина-Фасо</option>
+            <option value="Бурунди">Бурунди</option>
+            <option value="Бутан">Бутан</option>
+            <option value="Венесуэла">Венесуэла</option>
+            <option value="Гана">Гана</option>
+            <option value="Гваделупа">Гваделупа</option>
+            <option value="Гватемала">Гватемала</option>
+            <option value="Гондурас">Гондурас</option>
+            <option value="Гонконг">Гонконг</option>
+            <option value="Гренада">Гренада</option>
+            <option value="Гренландия">Гренландия</option>
+            <option value="Грузия">Грузия</option>
+            <option value="Дания">Дания</option>
+            <option value="Джибути">Джибути</option>
+            <option value="Доминика">Доминика</option>
+            <option value="Замбия">Замбия</option>
+            <option value="Зимбабве">Зимбабве</option>
+            <option value="Индонезия">Индонезия</option>
+            <option value="Иордания">Иордания</option>
+            <option value="Иран">Иран</option>
+            <option value="Исландия">Исландия</option>
+            <option value="Кабо-Верде">Кабо-Верде</option>
+            <option value="Казахстан">Казахстан</option>
+            <option value="Камерун">Камерун</option>
+            <option value="Канада">Канада</option>
+            <option value="Катар">Катар</option>
+            <option value="Кения">Кения</option>
+            <option value="Колумбия">Колумбия</option>
+            <option value="Коста-Рика">Коста-Рика</option>
+            <option value="Кыргызcтан">Кыргызcтан</option>
+            <option value="Лаос">Лаос</option>
+            <option value="Ливан">Ливан</option>
+            <option value="Лихтенштейн">Лихтенштейн</option>
+            <option value="Люксембург">Люксембург</option>
+            <option value="Мадагаскар">Мадагаскар</option>
+            <option value="Македония">Македония</option>
+            <option value="Малайзия">Малайзия</option>
+            <option value="Марианские о-ва">Марианские о-ва</option>
+            <option value="Мартиника">Мартиника</option>
+            <option value="Мексика">Мексика</option>
+            <option value="Мозамбик">Мозамбик</option>
+            <option value="Молдавия">Молдавия</option>
+            <option value="Монголия">Монголия</option>
+            <option value="Намибия">Намибия</option>
+            <option value="Непал">Непал</option>
+            <option value="Нигерия">Нигерия</option>
+            <option value="Никарагуа">Никарагуа</option>
+            <option value="о. Кука">о. Кука</option>
+            <option value="Оман">Оман</option>
+            <option value="Пакистан">Пакистан</option>
+            <option value="Палау">Палау</option>
+            <option value="Панама">Панама</option>
+            <option value="Папуа Новая Гвинея">Гвинея</option>
+            <option value="Парагвай">Парагвай</option>
+            <option value="Перу">Перу</option>
+            <option value="Реюньон">Реюньон</option>
+            <option value="Румыния">Румыния</option>
+            <option value="Сан-Марино">Марино</option>
+            <option value="Саудовская Аравия">Аравия</option>
+            <option value="Свазиленд">Свазиленд</option>
+            <option value="Северная Корея">Северная Корея</option>
+            <option value="Сенегал">Сенегал</option>
+            <option value="Сен-Мартен">Мартен</option>
+            <option value="Сент-Винсент и Гренадины">Сент-Винсент и Гренадины</option>
+            <option value="Сент-Китс и Невис">Сент-Китс и Невис</option>
+            <option value="Сент-Люсия">Сент-Люсия</option>
+            <option value="Сербия">Сербия</option>
+            <option value="Сирия">Сирия</option>
+            <option value="Танзания">Танзания</option>
+            <option value="Теркс и Кайкос">Теркс и Кайкос</option>
+            <option value="Того">Того</option>
+            <option value="Туркменистан">Туркменистан</option>
+            <option value="Уганда">Уганда</option>
+            <option value="Узбекистан">Узбекистан</option>
+            <option value="Уругвай">Уругвай</option>
+            <option value="Фиджи">Фиджи</option>
+            <option value="Филиппины">Филиппины</option>
+            <option value="Французская Полинезия">Полинезия</option>
+            <option value="ЦАР">ЦАР</option>
+            <option value="Чили">Чили</option>
+            <option value="Эквадор">Эквадор</option>
+            <option value="Эритрея">Эритрея</option>
+            <option value="Эфиопия">Эфиопия</option>
+            <option value="ЮАР">ЮАР</option>
+            <option value="Южная Корея">Южная Корея</option>
+            <option value="Япония">Япония</option>
+          </optgroup>
+        </FormControl>
+      )
   }
 }
 
@@ -649,8 +650,81 @@ class AirportCitySelect extends Component {
       <FormControl id="departure_city" componentClass="select" placeholder="select" defaultValue={this.state.departure_city}>
         {this.props.withEmpty && <option value="none">Не важно</option>}
         <optgroup label="Центральные">
+          <option value="Москва">Москва</option>
+          <option value="Санкт-Петербург">Санкт-Петербург</option>
+          <option value="Владивосток">Владивосток</option>
+          <option value="Воронеж">Воронеж</option>
+          <option value="Екатеринбург">Екатеринбург</option>
+          <option value="Калининград">Калининград</option>
+          <option value="Новосибирск">Новосибирск</option>
+          <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+          <option value="Уфа">Уфа</option>
         </optgroup>
         <optgroup label="Остальные">
+          <option value="Абакан">Абакан</option>
+          <option value="Алушта">Алушта</option>
+          <option value="Анадырь">Анадырь</option>
+          <option value="Анапа">Анапа</option>
+          <option value="Архангельск">Архангельск</option>
+          <option value="Астрахань">Астрахань</option>
+          <option value="Барнаул">Барнаул</option>
+          <option value="Белгород">Белгород</option>
+          <option value="Благовещенск">Благовещенск</option>
+          <option value="Братск">Братск</option>
+          <option value="Брянск">Брянск</option>
+          <option value="Владикавказ">Владикавказ</option>
+          <option value="Волгоград">Волгоград</option>
+          <option value="Ижевск">Ижевск</option>
+          <option value="Иркутск">Иркутск</option>
+          <option value="Казань">Казань</option>
+          <option value="Кемерово">Кемерово</option>
+          <option value="Краснодар">Краснодар</option>
+          <option value="Красноярск">Красноярск</option>
+          <option value="Курган">Курган</option>
+          <option value="Курск">Курск</option>
+          <option value="Липецк">Липецк</option>
+          <option value="Магадан">Магадан</option>
+          <option value="Магнитогорск">Магнитогорск</option>
+          <option value="Махачкала">Махачкала</option>
+          <option value="Минеральные Воды">Минеральные Воды</option>
+          <option value="Мурманск">Мурманск</option>
+          <option value="Нальчик">Нальчик</option>
+          <option value="Нижневартовск">Нижневартовск</option>
+          <option value="Нижнекамск">Нижнекамск</option>
+          <option value="Нижний Новгород">Нижний Новгород</option>
+          <option value="Новокузнецк">Новокузнецк</option>
+          <option value="Новороссийск">Новороссийск</option>
+          <option value="Новый Уренгой">Новый Уренгой</option>
+          <option value="Норильск">Норильск</option>
+          <option value="Омск">Омск</option>
+          <option value="Оренбург">Оренбург</option>
+          <option value="Орск">Орск</option>
+          <option value="Пенза">Пенза</option>
+          <option value="Пермь">Пермь</option>
+          <option value="Петропавловск-Камчатский">Петропавловск-Камчатский</option>
+          <option value="Самара">Самара</option>
+          <option value="Саратов">Саратов</option>
+          <option value="Севастополь">Севастополь</option>
+          <option value="Симферополь">Симферополь</option>
+          <option value="Сочи">Сочи</option>
+          <option value="Ставрополь">Ставрополь</option>
+          <option value="Сургут">Сургут</option>
+          <option value="Сызрань">Сызрань</option>
+          <option value="Сыктывкар">Сыктывкар</option>
+          <option value="Тольятти">Тольятти</option>
+          <option value="Томск">Томск</option>
+          <option value="Тюмень">Тюмень</option>
+          <option value="Улан-Удэ">Улан-Удэ</option>
+          <option value="Ульяновск">Ульяновск</option>
+          <option value="Хабаровск">Хабаровск</option>
+          <option value="Ханты-Мансийск">Ханты-Мансийск</option>
+          <option value="Чебоксары">Чебоксары</option>
+          <option value="Челябинск">Челябинск</option>
+          <option value="Чита">Чита</option>
+          <option value="Южно-Сахалинск">Южно-Сахалинск</option>
+          <option value="Якутск">Якутск</option>
+          <option value="Ялта">Ялта</option>
+          <option value="Ярославль">Ярославль</option>
         </optgroup>
       </FormControl>
     )
@@ -910,45 +984,77 @@ class SearchForm extends Component {
     data.adult_count = this.adult_count.state.rating
     if(!!this.child_count.state.rating)
     data.child_count = this.child_count.state.rating
-    this.props.handleSearch(data)
+    console.log(data)
+    // this.props.handleSearch(data)
   }
   render() {
     return (
       <Form className='search_form' onSubmit={this.handleSearch.bind(this)}>
-        <Col lg={3} md={6} sm={12}>
+        <Col lg={4} md={6} sm={12}>
           <ControlLabel>Страна:</ControlLabel>
           <CountrySelect available_countries={this.props.available_countries} withEmpty={true} />
         </Col>
-        <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Город:</ControlLabel>
-          <FormControl
-            id="city"
-            type="text"
-            placeholder="Введите название города..."
-          />
+        <Col lg={4} md={6} sm={12}>
+          <ControlLabel>Город вылета:</ControlLabel>
+          <AirportCitySelect withEmpty={true} />
         </Col>
-        <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Дата вылета:</ControlLabel>
+        <Col lg={4} md={6} sm={12}>
+          <ControlLabel>Туроператор:</ControlLabel>
+          <TravelAgentSelect withEmpty={true} />
+        </Col>
+        <Col lg={6} md={6} sm={12}>
+          <ControlLabel>Дата вылета (c):</ControlLabel>
           <DateTime
-            inputProps={{id: 'departure_date', placeholder: 'Выберите дату'}}
+            inputProps={{id: 'departure_date_from', placeholder: 'Выберите дату'}}
             closeOnSelect={true}
             timeFormat={false}
             dateFormat='DD.MM.YYYY'
             isValidDate={ (current) => { return current.isAfter( DateTime.moment().subtract(1, 'day') ) } }
           />
         </Col>
-        <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Туроператор:</ControlLabel>
-          <TravelAgentSelect withEmpty={true} />
+        <Col lg={6} md={6} sm={12}>
+          <ControlLabel>Дата вылета (до):</ControlLabel>
+          <DateTime
+            inputProps={{id: 'departure_date_to', placeholder: 'Выберите дату'}}
+            closeOnSelect={true}
+            timeFormat={false}
+            dateFormat='DD.MM.YYYY'
+            isValidDate={ (current) => { return current.isAfter( DateTime.moment().subtract(1, 'day') ) } }
+          />
         </Col>
-        <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Количество ночей:</ControlLabel>
-          <FormControl id="nights" componentClass="select" placeholder="select">
+        <Col lg={6} md={6} sm={12}>
+          <ControlLabel>Количество ночей (от):</ControlLabel>
+          <FormControl id="nights_from" componentClass="select" placeholder="select">
             <option key='none' value='none'>Не важно</option>
             {[...Array(29)].map((x, i) =>
               <option key={i + 1} value={i + 1}>{i + 1}</option>
             )}
           </FormControl>
+        </Col>
+        <Col lg={6} md={6} sm={12}>
+          <ControlLabel>Количество ночей (до):</ControlLabel>
+          <FormControl id="nights_to" componentClass="select" placeholder="select">
+            <option key='none' value='none'>Не важно</option>
+            {[...Array(29)].map((x, i) =>
+              <option key={i + 1} value={i + 1}>{i + 1}</option>
+            )}
+          </FormControl>
+        </Col>
+        <Col lg={6} md={6} sm={12}>
+          <ControlLabel>Стоимость (от):</ControlLabel>
+          <FormControl
+            id="real_cost_from"
+            type="number"
+            placeholder="Стоимость тура"
+          />
+        </Col>
+        <Col lg={6} md={6} sm={12}>
+          <ControlLabel>Стоимость (до):</ControlLabel>
+          <FormControl
+            id="real_cost_to"
+            type="number"
+            placeholder="Стоимость тура"
+          />
         </Col>
         <Col className='search_rater' lg={3} md={6} sm={12}>
           <ControlLabel>Взрослые: <RaterGetter ref={(ref)=>{this.adult_count_shower = ref}} /></ControlLabel>
@@ -966,14 +1072,6 @@ class SearchForm extends Component {
             ref={(rater) => { this.child_count = rater; }}>
             <RaterStar view_type="child" />
           </Rater>
-        </Col>
-        <Col lg={3} md={6} sm={12}>
-          <ControlLabel>Стоимость:</ControlLabel>
-          <FormControl
-            id="real_cost"
-            type="number"
-            placeholder="Стоимость тура"
-          />
         </Col>
         <Col lg={12} md={12} sm={12}>
           <br />

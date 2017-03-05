@@ -4,7 +4,9 @@ import {
   GET_USERS_ERR,
   DELETE_USERS_REQUEST,
   DELETE_USERS_SUCCESS,
-  DELETE_USERS_ERR
+  DELETE_USERS_ERR,
+  SAVE_USER_REQUEST,
+  SAVE_USER_SUCCESS
 } from '../constants'
 
 const initialState = {
@@ -35,6 +37,15 @@ export let adminReducer = (state = initialState, action) => {
         loading: true
       }
     case DELETE_USERS_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload.users
+      }
+    case SAVE_USER_REQUEST:
+      return {
+        loading: true
+      }
+    case SAVE_USER_SUCCESS:
       return {
         loading: false,
         users: action.payload.users

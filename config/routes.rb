@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post '/api/change_pass', to: 'user#change_pass'
   put '/api/change_subscribe', to: 'user#change_subscribe'
   get '/api/users', to: 'user#users'
+  post '/api/users', to: 'user#create_user'
   delete '/api/delete_users', to: 'user#delete_users'
   get '/api/activate_account', to: 'user#activate'
 

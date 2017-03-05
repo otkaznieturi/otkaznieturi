@@ -1,5 +1,5 @@
-const host = "http://127.0.0.1:4000"
-// const host = "http://85.143.214.26:3000"
+// const host = "http://127.0.0.1:4000"
+const host = "http://85.143.214.26:3000"
 
 const prefix = '/api/'
 
@@ -58,6 +58,8 @@ export const GET_USERS_REQUEST = 'GET_USERS_REQUEST'
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
 export const GET_USERS_ERR = 'GET_USERS_ERR'
 export const DELETE_USERS_REQUEST = 'DELETE_USERS_REQUEST'
+export const SAVE_USER_REQUEST = 'SAVE_USER_REQUEST'
+export const SAVE_USER_SUCCESS = 'SAVE_USER_SUCCESS'
 export const DELETE_USERS_SUCCESS = 'DELETE_USERS_SUCCESS'
 export const DELETE_USERS_ERR = 'DELETE_USERS_ERR'
 

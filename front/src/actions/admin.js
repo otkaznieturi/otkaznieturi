@@ -6,8 +6,12 @@ import {
   DELETE_USERS_SUCCESS,
   DELETE_USERS_ERR,
   get_users_url,
+  SAVE_USER_REQUEST,
+  SAVE_USER_SUCCESS,
   delete_users_url
 } from '../constants'
+
+import {forEach} from 'lodash'
 
 export let get_users = (mode) => {
   return (dispatch) => {
@@ -35,7 +39,7 @@ export let get_users = (mode) => {
         dispatch({
           type: GET_USERS_ERR
         })
-    });
+    })
   }
 }
 
@@ -68,6 +72,34 @@ export let delete_users = (ids) => {
         dispatch({
           type: DELETE_USERS_ERR
         })
-    });
+    })
+  }
+}
+
+export let save = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: SAVE_USER_REQUEST
+    })
+
+    let data = new FormData()
+    forEach(payload, (value, key) => {data.append(key, value)})
+    fetch(get_users_url, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+      },
+      method: 'POST',
+      credentials: 'include',
+      body: data
+    }).then((response) => {
+        response.json().then((jsonResp) => {
+          dispatch({
+            type: SAVE_USER_SUCCESS,
+            payload: {
+              users: jsonResp.users
+            }
+          })
+        })
+      })
   }
 }

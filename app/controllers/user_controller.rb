@@ -40,10 +40,20 @@ class UserController < ApplicationController
     render json: { subscribe: @current_user.tours_subscribe }
   end
 
+  def create_user
+    User.create!(params_for_create)
+    users = User.where.not(id: @current_user.id)
+    render json: { status: :ok, users: users }
+  end
+
   private
 
   def user_params
     params.permit(:old_pass, :new_pass, :new_pass_confirm)
+  end
+
+  def params_for_create
+    params.permit(:email, :password, :address, :company_name, :user_data)
   end
 
   def must_be_admin!
