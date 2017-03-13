@@ -66,7 +66,7 @@ class ToursController < ApplicationController
   end
 
   def available_countries
-    countries = Tour.pluck(:country).uniq!
+    countries = Tour.pluck(:country).uniq
     render json: { countries: countries }
   end
 
