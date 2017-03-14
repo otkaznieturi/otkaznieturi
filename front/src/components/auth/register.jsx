@@ -6,7 +6,6 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as authActions from '../../actions/auth'
 import Header from '../header.jsx'
-import Recaptcha from 'react-recaptcha'
 
 export class RegisterPage extends Component {
   constructor(props) {
@@ -66,12 +65,6 @@ export class RegisterPage extends Component {
                         </FormGroup>
                       :
                         <FormGroup>
-                          <Recaptcha
-                            sitekey="6LdTOhIUAAAAAJnBd0fPA-gpCRSboBiC0IL39CcH"
-                            render="explicit"
-                            onloadCallback={this.recaptchaLoadCallback}
-                            verifyCallback={this.recaptchaVerifyCallback.bind(this)}
-                          />
                         </FormGroup>
                       }
                     </Form>

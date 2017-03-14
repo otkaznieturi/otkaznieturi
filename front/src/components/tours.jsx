@@ -3,7 +3,8 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as accountActions from '../actions/account'
 import {Link} from 'react-router'
-import {forEach} from 'lodash'
+import _ from 'lodash'
+import moment from 'moment'
 
 import './common.css'
 import './tours.css'
@@ -12,6 +13,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 import Rater from 'react-rater'
 import DateTime from 'react-datetime'
 import {
+  Alert,
   ButtonToolbar,
   Form,
   Col,
@@ -735,7 +737,7 @@ class TourForm extends Component {
   handle(e) {
     e.preventDefault()
     let data = {}
-    forEach(e.target.elements, (v) => {data[v.id] = v.value})
+    _.forEach(e.target.elements, (v) => {data[v.id] = v.value})
     data.rating = this.hotel_rate.state.rating
     data.adult_count = this.adult_count.state.rating
     data.child_count = this.child_count.state.rating
@@ -976,16 +978,32 @@ class Tours extends Component {
 }
 
 class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {errors: null}
+  }
   handleSearch(e) {
     e.preventDefault()
     let data = {}
-    forEach(e.target.elements, (v) => {if(v.value && v.value !== 'none') data[v.id] = v.value})
+    let errors = []
+    _.forEach(e.target.elements, (v) => {if(v.value && v.value !== 'none') data[v.id] = v.value})
     if(!!this.adult_count.state.rating)
     data.adult_count = this.adult_count.state.rating
     if(!!this.child_count.state.rating)
     data.child_count = this.child_count.state.rating
-    console.log(data)
-    // this.props.handleSearch(data)
+
+    if(data.departure_date_from && data.departure_date_to && moment(data.departure_date_from, "DD.MM.YYYY") > moment(data.departure_date_to, "DD.MM.YYYY"))
+      errors.push('Некорректный диапазон дат вылета')
+    if(data.nights_from && data.nights_to && data.nights_from > data.nights_to)
+      errors.push('Некорректный диапазон количества ночей')
+    if(data.real_cost_from && data.real_cost_to && data.real_cost_from > data.real_cost_to)
+      errors.push('Некорректный диапазон стоимости')
+    if(_.isEmpty(errors)){
+      this.props.handleSearch(data)
+      this.setState({errors: null})
+    } else {
+      this.setState({errors: errors})
+    }
   }
   render() {
     return (
@@ -1046,6 +1064,9 @@ class SearchForm extends Component {
             id="real_cost_from"
             type="number"
             placeholder="Стоимость тура"
+            min={0}
+            step={100}
+            max={1000000}
           />
         </Col>
         <Col lg={6} md={6} sm={12}>
@@ -1054,6 +1075,9 @@ class SearchForm extends Component {
             id="real_cost_to"
             type="number"
             placeholder="Стоимость тура"
+            min={0}
+            step={100}
+            max={1000000}
           />
         </Col>
         <Col className='search_rater' lg={3} md={6} sm={12}>
@@ -1074,7 +1098,13 @@ class SearchForm extends Component {
           </Rater>
         </Col>
         <Col lg={12} md={12} sm={12}>
-          <br />
+          <div className="errors">
+            {this.state.errors &&
+              this.state.errors.map((item, i) => <Alert key={i} bsStyle="danger">{item}</Alert>)
+            }
+          </div>
+        </Col>
+        <Col lg={12} md={12} sm={12}>
           <Button bsStyle="primary" type="submit">
             Поиск
           </Button>

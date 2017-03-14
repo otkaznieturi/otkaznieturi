@@ -2,7 +2,18 @@ class ToursController < ApplicationController
   before_action :authenticate_request!
 
   def search
-    found = Tour.where(tour_params)
+    dfrom = Date.strptime(params[:departure_date_from], "%d.%m.%Y") if params[:departure_date_from]
+    dto =  Date.strptime(params[:departure_date_to], "%d.%m.%Y") if params[:departure_date_to]
+    nfrom = params[:nights_from] || 0
+    nto = params[:nights_to] || 30
+    cfrom = params[:real_cost_from] || 0
+    cto = params[:real_cost_to] || 1000000
+    found = Tour.where(
+      nights: nfrom..nto,
+      real_cost: cfrom..cto,
+    )
+    found = found.where(departure_date: dfrom..dto) if dfrom && dto
+    found = found.where(tour_params)
     render json: { tours: found }, status: :ok
   end
 
