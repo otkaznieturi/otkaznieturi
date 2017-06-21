@@ -130,8 +130,10 @@ class ShowToursPage extends Component {
           converted_status = 'Продан'
         break
         case 'closed':
-          converted_status = 'Закрыт'
+          converted_status = 'Истек срок'
         break
+        case 'not_actual':
+          converted_status = 'Не актуальный'
         default:
           converted_status = ''
         break
@@ -148,7 +150,7 @@ class ShowToursPage extends Component {
             <dl className="dl-horizontal">
               <dt className='agency'>Турагентство</dt><dd>{this.props.account.tour.agency}</dd>
               <dt className='country'>Страна</dt><dd>{this.props.account.tour.country}</dd>
-              <dt className='city'>Город</dt><dd>{this.props.account.tour.city}</dd>
+              <dt className='city'>Курорт</dt><dd>{this.props.account.tour.city}</dd>
               <dt className='hotel'>Отель</dt><dd>{this.props.account.tour.hotel}</dd>
               <dt className='rating'>Количество звезд отеля</dt><dd><Rater interactive={false} rating={this.props.account.tour.rating} /></dd>
               <dt className='room_rating'>Категория номера</dt><dd>{this.props.account.tour.room_rating}</dd>
@@ -754,15 +756,17 @@ class TourForm extends Component {
           type="text"
           placeholder="Введите название агентства..."
           defaultValue={values.agency}
+          required
         />
         <ControlLabel>Страна:</ControlLabel>
         <CountrySelect country={values.country}/>
-        <ControlLabel>Город:</ControlLabel>
+        <ControlLabel>Курорт:</ControlLabel>
         <FormControl
           id="city"
           type="text"
-          placeholder="Введите название города..."
+          placeholder="Введите название курорта..."
           defaultValue={values.city}
+          required
         />
         <ControlLabel>Отель:</ControlLabel>
         <FormControl
@@ -770,6 +774,7 @@ class TourForm extends Component {
           type="text"
           placeholder="Введите название отеля..."
           defaultValue={values.hotel}
+          required
         />
         <ControlLabel>Категория отеля: <RaterGetter rating={values.rating || 1} ref={(ref)=>{this.rating_shower = ref}} /></ControlLabel>
         <Rater rating={values.rating || 1} onRate={(e) => {this.rating_shower.setState({rating: e.rating})}} ref={(rater) => { this.hotel_rate = rater; }}>
@@ -873,7 +878,8 @@ class TourForm extends Component {
           <FormControl id="status" componentClass="select" placeholder="select" defaultValue={values.status}>
             <option value="active">Активен</option>
             <option value="bought">Продан</option>
-            <option value="closed">Закрыт</option>
+            <option value="closed">Истек срок</option>
+            <option value="not_actual">Не актуальный</option>
           </FormControl>
         </FormGroup>
         <ButtonToolbar>
@@ -911,9 +917,9 @@ class TourTable extends Component {
             <TableHeaderColumn hidden dataField='id' isKey={true} dataSort={ true }>ID</TableHeaderColumn>
             <TableHeaderColumn dataField='agency' dataSort={ true }>Турагентство</TableHeaderColumn>
             <TableHeaderColumn dataField='country' dataSort={ true }>Страна</TableHeaderColumn>
-            <TableHeaderColumn dataField='city' dataSort={ true }>Город</TableHeaderColumn>
+            <TableHeaderColumn dataField='city' dataSort={ true }>Курорт</TableHeaderColumn>
             <TableHeaderColumn dataField='hotel' dataSort={ true }>Отель</TableHeaderColumn>
-            <TableHeaderColumn dataField='rating' dataFormat={ ratingFormatter } dataSort={ true }>Рейтинг</TableHeaderColumn>
+            <TableHeaderColumn dataField='real_cost' dataSort={ true }>Стоимость</TableHeaderColumn>
           </BootstrapTable>
         :
           <div>
@@ -1004,6 +1010,7 @@ class SearchForm extends Component {
     } else {
       this.setState({errors: errors})
     }
+    this.props.handleSearch(data)
   }
   render() {
     return (
@@ -1090,7 +1097,7 @@ class SearchForm extends Component {
           <ControlLabel>Дети: <RaterGetter ref={(ref)=>{this.child_count_shower = ref}} /></ControlLabel>
           <Rater
             total={3}
-            onRate={(e) => {
+            onRate={e => {
               this.child_count_shower.setState({rating: e.rating || undefined})
             }}
             ref={(rater) => { this.child_count = rater; }}>
